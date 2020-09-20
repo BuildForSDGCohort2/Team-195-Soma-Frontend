@@ -11,6 +11,9 @@ import SignUp from "./components/signup.component";
 import About from "./components/about.component";
 import Courses from "./components/courses.component";
 import Home from "./components/home.component";
+import Languagesetup from "./components/languagesetup.component";
+import Language from "./components/language.component";
+import Languagedit from "./components/Languagedit.component";
 
 
 function App() {
@@ -35,6 +38,9 @@ function App() {
               <li className="nav-item">
                 <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
               </li>
+			  <li className="nav-item">
+                <Link className="nav-link" to={"/languagesetup"}>Language </Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -48,6 +54,9 @@ function App() {
             <Route path="/sign-up" component={SignUp} />
             <Route path="/about" component={About} />
             <Route path="/courses" component={Courses} />
+			 <Route path="/languagesetup" component={Languagesetup} />
+			 <Route path="/language" component={Language} />
+			 <Route path="/languagedit" component={Languagedit} />
           </Switch>
         </div>
       </div>
