@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import Language from "./language.component";
-import Languagedit from "./Languagedit.component";
+import Language from "./language/language.component";
+import Languagedit from "./language/Languagedit.component";
 
 
 export default class Languagesetup extends Component {
