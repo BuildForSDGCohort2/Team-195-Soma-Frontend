@@ -12,8 +12,8 @@ import About from "./components/about.component";
 import Courses from "./components/courses.component";
 import Home from "./components/home.component";
 import Languagesetup from "./components/languagesetup.component";
-import Language from "./components/language.component";
-import Languagedit from "./components/Languagedit.component";
+import Language from "./components/language/language.component";
+import Languagedit from "./components/language/Languagedit.component";
 
 
 function App() {
@@ -55,8 +55,8 @@ function App() {
             <Route path="/about" component={About} />
             <Route path="/courses" component={Courses} />
 			 <Route path="/languagesetup" component={Languagesetup} />
-			 <Route path="/language" component={Language} />
-			 <Route path="/languagedit" component={Languagedit} />
+			 <Route path="/language/language" component={Language} />
+			 <Route path="/language/languagedit" component={Languagedit} />
           </Switch>
         </div>
       </div>

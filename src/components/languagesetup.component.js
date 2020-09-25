@@ -14,12 +14,12 @@ export default class Languagesetup extends Component {
         <div >
 	<nav>
 	<div className="auth-inner">
-    <a class="selectedLink" aria-current="page" href="/language">Create New Language</a>
+    <a class="selectedLink" aria-current="page" href="/language/language">Create New Language</a>
 	</div>
 	<br />
 	<br />
 	<div className="auth-inner">
-    <a class="selectedLink" aria-current="page" href="/Languagedit">Edit Your Languages</a>
+    <a class="selectedLink" aria-current="page" href="/language/Languagedit">Edit Your Languages</a>
 	</div>
     </nav>
 	<Switch>
