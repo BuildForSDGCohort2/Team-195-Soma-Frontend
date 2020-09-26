@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Language from "./language/language.component";
-import Languagedit from "./language/Languagedit.component";
+import Languagedit from "./language/languagedit.component";
 
 
 export default class Languagesetup extends Component {
@@ -19,7 +19,7 @@ export default class Languagesetup extends Component {
 	<br />
 	<br />
 	<div className="auth-inner">
-    <a class="selectedLink" aria-current="page" href="/language/Languagedit">Edit Your Languages</a>
+    <a class="selectedLink" aria-current="page" href="/language/languagedit">Edit Your Languages</a>
 	</div>
     </nav>
 	<Switch>
@@ -28,7 +28,7 @@ export default class Languagesetup extends Component {
                     component={Language} 
                 />
 				<Route
-                    path="/language/Languagedit"
+                    path="/language/languagedit"
                     component={Languagedit} 
                 />
 	</ Switch>

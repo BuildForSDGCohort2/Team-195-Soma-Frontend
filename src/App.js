@@ -13,7 +13,7 @@ import Courses from "./components/courses.component";
 import Home from "./components/home.component";
 import Languagesetup from "./components/languagesetup.component";
 import Language from "./components/language/language.component";
-import Languagedit from "./components/language/Languagedit.component";
+import Languagedit from "./components/language/languagedit.component";
 
 
 function App() {
