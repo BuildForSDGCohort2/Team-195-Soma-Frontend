@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
 import Footer from "./components/footer.component";
 
@@ -11,13 +11,19 @@ import SignUp from "./components/signup.component";
 import About from "./components/about.component";
 import Courses from "./components/courses.component";
 import Home from "./components/home.component";
+import Category from './components/category.component';
+
+import Menu from './components/menu.component'
+import Navbar from './components/navbar.component';
 
 
 function App() {
+  
   return (
     <Router>
+
     <div className="App">
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+      {/* <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
           <Link className="navbar-brand" to={"/"}>Soma</Link>
          
@@ -38,20 +44,13 @@ function App() {
             </ul>
           </div>
         </div>
-      </nav>
+      </nav> */}
 
-      <div className="main">
-        <div className="page">
-          <Switch>
-          <Route exact path='/' component={Home} />
-            <Route path="/sign-in" component={Login} />
-            <Route path="/sign-up" component={SignUp} />
-            <Route path="/about" component={About} />
-            <Route path="/courses" component={Courses} />
-          </Switch>
-        </div>
-      </div>
+      
       {/* <Hero/> */}
+      <Navbar/>
+      <Menu/>
+      {/* <Content/> */}
       <Footer/>
     </div></Router>
   );
