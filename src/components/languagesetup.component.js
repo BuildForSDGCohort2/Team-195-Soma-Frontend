@@ -24,11 +24,11 @@ export default class Languagesetup extends Component {
     </nav>
 	<Switch>
 	<Route
-                    path="/language"
+                    path="/language/language"
                     component={Language} 
                 />
 				<Route
-                    path="/language"
+                    path="/language/Languagedit"
                     component={Languagedit} 
                 />
 	</ Switch>
