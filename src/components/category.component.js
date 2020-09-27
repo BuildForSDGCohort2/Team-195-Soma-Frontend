@@ -5,10 +5,10 @@ import { Button} from 'react-bootstrap';
 
 export default class Category extends Component {
   state = {
-    persons: {}
+    persons: []
   }
   componentDidMount() {
-    axios.get('http://localhost:8000/api/admin')
+    axios.get('https://jsonplaceholder.typicode.com/users/')
     .then(res => {
       const persons = res.data;
       this.setState({ persons });
@@ -18,7 +18,8 @@ export default class Category extends Component {
       console.warn(error);
     })
   }
-  deleteUser(userId) {  
+
+  deleteUser() {  
     const { users } = this.state;     
    axios.delete('https://jsonplaceholder.typicode.com/users/' + userId).then(result=>{  
      alert(result.data);  
