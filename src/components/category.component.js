@@ -5,14 +5,18 @@ import { Button} from 'react-bootstrap';
 
 export default class Category extends Component {
   state = {
-    persons: []
+    persons: {}
   }
   componentDidMount() {
-    axios.get(`'https://jsonplaceholder.typicode.com/users`)
-      .then(res => {
-        const persons = res.data;
-        this.setState({ persons });
-      })
+    axios.get('http://localhost:8000/api/admin')
+    .then(res => {
+      const persons = res.data;
+      this.setState({ persons });
+      console.log(persons)
+    })
+    .catch((error) => {
+      console.warn(error);
+    })
   }
   deleteUser(userId) {  
     const { users } = this.state;     
@@ -73,13 +77,14 @@ export default class Category extends Component {
             </tr>
           </thead>
           <tbody>
-          { this.state.persons.map(person =><tr>
+            
+          {/* { this.state.Object.keys(persons).map(person =><tr>
               <td>{person.id}</td>
               <td>{person.name}</td>
-              <td>{person.country}</td>
+              <td>{person.email}</td>
               <td><span className="tag tag-success">{person.name}</span></td>
              
-            </tr> )}
+            </tr> )} */}
                       <tr>
               <td>183</td>
               <td>John Doe</td>
