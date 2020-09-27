@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
 import Footer from "./components/footer.component";
 
@@ -11,16 +11,25 @@ import SignUp from "./components/signup.component";
 import About from "./components/about.component";
 import Courses from "./components/courses.component";
 import Home from "./components/home.component";
+<<<<<<< HEAD
 import Languagesetup from "./components/languagesetup.component";
 import Language from "./components/language.component";
 import Languagedit from "./components/Languagedit.component";
+=======
+import Category from './components/category.component';
+
+import Menu from './components/menu.component'
+import Navbar from './components/navbar.component';
+>>>>>>> 6fefa83bc98da0dda30c1e386a75a88aaf9b1429
 
 
 function App() {
+  
   return (
     <Router>
+
     <div className="App">
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+      {/* <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
           <Link className="navbar-brand" to={"/"}>Soma</Link>
          
@@ -44,6 +53,7 @@ function App() {
             </ul>
           </div>
         </div>
+<<<<<<< HEAD
       </nav>
 
       <div className="main">
@@ -60,7 +70,15 @@ function App() {
           </Switch>
         </div>
       </div>
+=======
+      </nav> */}
+
+      
+>>>>>>> 6fefa83bc98da0dda30c1e386a75a88aaf9b1429
       {/* <Hero/> */}
+      <Navbar/>
+      <Menu/>
+      {/* <Content/> */}
       <Footer/>
     </div></Router>
   );
