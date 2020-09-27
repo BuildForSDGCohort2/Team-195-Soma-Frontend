@@ -5,7 +5,7 @@ import { Button} from 'react-bootstrap';
 
 export default class Category extends Component {
   state = {
-    persons: {}
+    persons: []
   }
   componentDidMount() {
     axios.get('http://localhost:8000/api/admin')
