@@ -23,7 +23,7 @@ export default class Category extends Component {
 }
   componentDidMount() {
     this.getData()
-    this.interval=setInterval(()=>this.getData(),3000)
+    //this.interval=setInterval(()=>this.getData(),3000)
   }
 
   componentWillUnmount() {
