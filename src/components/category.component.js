@@ -68,6 +68,7 @@ export default class Category extends Component {
     console.log(" formqt te after ",this.state.formState)
   }
 
+   
   deleteUser(userId) {  
     const { users } = this.state;     
    axios.delete('https://jsonplaceholder.typicode.com/users/' + userId).then(result=>{  
