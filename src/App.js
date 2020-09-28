@@ -11,16 +11,13 @@ import SignUp from "./components/signup.component";
 import About from "./components/about.component";
 import Courses from "./components/courses.component";
 import Home from "./components/home.component";
-<<<<<<< HEAD
 import Languagesetup from "./components/languagesetup.component";
 import Language from "./components/language.component";
 import Languagedit from "./components/Languagedit.component";
-=======
 import Category from './components/category.component';
 
 import Menu from './components/menu.component'
 import Navbar from './components/navbar.component';
->>>>>>> 6fefa83bc98da0dda30c1e386a75a88aaf9b1429
 
 
 function App() {
@@ -53,7 +50,6 @@ function App() {
             </ul>
           </div>
         </div>
-<<<<<<< HEAD
       </nav>
 
       <div className="main">
@@ -70,16 +66,15 @@ function App() {
           </Switch>
         </div>
       </div>
-=======
       </nav> */}
 
       
->>>>>>> 6fefa83bc98da0dda30c1e386a75a88aaf9b1429
       {/* <Hero/> */}
       <Navbar/>
       <Menu/>
       {/* <Content/> */}
-      <Footer/>
+    { //<Footer/>
+    }
     </div></Router>
   );
 }

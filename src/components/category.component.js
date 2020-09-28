@@ -4,20 +4,70 @@ import { Button} from 'react-bootstrap';
 
 
 export default class Category extends Component {
-  state = {
-    persons: {}
+  constructor(props){
+    super(props);
+    this.showForm=this.showForm.bind(this)
+    this.onSubmit=this.onSubmit.bind(this)
+    this.setFormValues=this.setFormValues.bind(this)
+    //this.setCode=this.setCode.bind(this)
+  this.state = {
+    formState:true,
+    persons: {},
+    categories:[],
+    form:{
+      name:'',
+      code:''
+    },
+    
   }
+}
   componentDidMount() {
-    axios.get('http://localhost:8000/api/admin')
+    this.getData()
+    this.interval=setInterval(()=>this.getData(),3000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  getData(){
+    axios.get('http://soma.local:84/api/admin')
     .then(res => {
       const persons = res.data;
-      this.setState({ persons });
-      console.log(persons)
+      this.setState({ persons:persons });
+
+      let cat=res.data.categories;
+      this.setState({ categories:cat });
     })
     .catch((error) => {
       console.warn(error);
     })
   }
+
+  setFormValues(e){
+    let frm=this.state.form
+    frm[e.target.name]=e.target.value
+    this.setState({form:frm})
+  }
+
+
+  onSubmit(e){
+    e.preventDefault()
+    axios.post("http://soma.local:84/api/man/category", (this.state.form)).then(({data})=>{
+
+    console.log("succes message:",data.message)
+
+    }).catch(err=>{
+      console.error("error from submit ",err);
+    })
+  }
+  showForm(e){
+    console.log(" formqt te before ",this.state.formState)
+    this.setState({formState:!this.state.formState})
+    document.getElementById("fillForm").style.display=this.state.formState ? "block":"none"
+    console.log(" formqt te after ",this.state.formState)
+  }
+
   deleteUser(userId) {  
     const { users } = this.state;     
    axios.delete('https://jsonplaceholder.typicode.com/users/' + userId).then(result=>{  
@@ -28,8 +78,10 @@ export default class Category extends Component {
       });  
     });  
   }  
+
     render() {
         return (
+          <div>
           <div className="content-wrapper">
           {/* Content Header (Page header) */}
           <div className="content-header">
@@ -53,8 +105,10 @@ export default class Category extends Component {
   <div className="col-12">
     <div className="card">
       <div className="card-header">
-        <h3 className="card-title">Responsive Hover Table</h3>
+        <h3 className="card-title">Responsive Hover Table</h3><br/>
+        <input type="button" className="btn btn-primary float-left" value="New Category" onClick={this.showForm}/>
         <div className="card-tools">
+       
           <div className="input-group input-group-sm" style={{width: 150}}>
             <input type="text" name="table_search" className="form-control float-right" placeholder="Search" />
             <div className="input-group-append">
@@ -65,19 +119,28 @@ export default class Category extends Component {
       </div>
       
       {/* /.card-header */}
+      
       <div className="card-body table-responsive p-0">
+        
         <table className="table table-hover text-nowrap">
           <thead>
             <tr>
-              <th>ID</th>
+              
               <th>Name</th>
               <th>Code</th>
-              <th>Action</th>
+              <th>Created At</th>
               
             </tr>
           </thead>
-          <tbody>
-            
+          <tbody >
+          {this.state.categories.map(cat=>(
+            <tr key={cat.id}>
+              
+          <td>{cat.name}</td>
+          <td>{cat.code}</td>
+          <td>{cat.created_at}</td>
+          </tr>
+          ))}
           {/* { this.state.Object.keys(persons).map(person =><tr>
               <td>{person.id}</td>
               <td>{person.name}</td>
@@ -85,7 +148,7 @@ export default class Category extends Component {
               <td><span className="tag tag-success">{person.name}</span></td>
              
             </tr> )} */}
-                      <tr>
+                     { /*<tr>
               <td>183</td>
               <td>John Doe</td>
               <td>11-7-2014</td>
@@ -98,7 +161,7 @@ export default class Category extends Component {
               <td>11-7-2014</td>
               <td><span className="tag tag-warning">Pending</span></td>
               
-            </tr>
+            </tr>*/}
             
             
           </tbody>
@@ -113,9 +176,23 @@ export default class Category extends Component {
 </div>
           </div>
           </div>
+          
           </div>
-            
-            
+          <div id="fillForm" className="fill-parent" style={ {display:"none"} }>
+          <div className="fill-form">
+           <button type="button" onClick={this.showForm} className="close">&times;</button>
+            <h3>Category Management</h3>
+            <form className="entry-form" onSubmit={this.onSubmit}>
+            <label htmlFor="name">Name:</label><input id="name" name="name" value={this.state.form.name}  onChange={this.setFormValues} type="text"/><br/>
+            <label htmlFor="code">Code:</label><input id="code" name="code" type="text" value={this.state.form.code} onChange={this.setFormValues}/><br/>
+            <div className="actions">
+            <input type="reset" className="btn btn-danger" value="Reset" />
+            <input type="submit" className="btn btn-success" value="Submit"/>
+            </div>
+            </form>
+          </div>
+          </div>
+          </div>
         );
     }
 }
