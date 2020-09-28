@@ -13,7 +13,7 @@ const navItems = (props) => {
       <NavItem link="/about">About Soma</NavItem>
 
       <NavItem link="/courses">Courses</NavItem>
-
+      <NavItem link="/category">Category</NavItem>
       <NavItem link="/sign-in">Login</NavItem>
       <NavItem link="/sign-up">Sign up</NavItem>
     </ul>
