@@ -71,6 +71,8 @@ function App() {
                 <Route path="/sign-up" component={SignUp} />
                 <Route path="/about" component={About} />
                 <Route path="/courses" component={Courses} />
+                <Route path="/category" component={Category} />
+
               </Switch>
             </div>
           </div>
