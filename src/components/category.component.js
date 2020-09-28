@@ -31,7 +31,7 @@ export default class Category extends Component {
   }
 
   getData(){
-    axios.get('http://soma.local:84/api/admin')
+    axios.get('https://team-195-soma-backend.herokuapp.com/api/admin')
     .then(res => {
       const persons = res.data;
       this.setState({ persons:persons });
@@ -53,7 +53,7 @@ export default class Category extends Component {
 
   onSubmit(e){
     e.preventDefault()
-    axios.post("http://soma.local:84/api/man/category", (this.state.form)).then(({data})=>{
+    axios.post("https://team-195-soma-backend.herokuapp.com/api/man/category", (this.state.form)).then(({data})=>{
 
     console.log("succes message:",data.message)
 
