@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import styles from "./Layout.module.css";
 import Toolbar from "../../components/UI/SideDrawer/Toolbar.component";
 import SideDrawer from "../../components/UI/SideDrawer/SideDrawer.component";
+import Footer from "../../components/footer.component";
 
 class Layout extends Component {
   state = {
@@ -33,6 +34,7 @@ class Layout extends Component {
           closed={this.sideDrawerClosedHandler}
         />
         <main className={styles.Content}>{this.props.children}</main>
+        <Footer />
       </div>
     );
   }
