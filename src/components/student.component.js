@@ -9,7 +9,9 @@ export default class Students extends Component{
     this.state={
         course:[],
         lesson:[],
-        drawer:true,
+        drawer:false,
+        contWidth:'',
+        mLeft:''
     }
 }
 
@@ -18,9 +20,18 @@ componentDidMount(){
 }
 
 drawerState(e){
+    let w='',ml=''
+    let bloc=document.getElementById("container")
     console.log(" formqt te before ",this.state.drawer)
+
+    w=this.state.drawer ? "calc(100% - 200px)":"100%"
+    ml=this.state.drawer ? "200px":"0"
+
     document.getElementById("drawer").style.display=this.state.drawer ? "block":"none"
+    bloc.style.width=w
+    bloc.style.marginLeft=ml
     this.setState({drawer:!this.state.drawer})
+    
 }
 
 getData(){
@@ -47,19 +58,19 @@ render(){
                         <span style={{color:"white",fontSize:"small",fontWeight:"italic",float:"left",marginTop:"2px"}}>mhadysydney@gmail.com<br/>664-504-690</span>
                     </div>
                     <div className="menu-list">
-                        <div className="list-menu-item">
+                        <div className="list-menu-item clickable">
                             <div className="myMenu">
                                 <img src="/img/icons/person.svg" alt="menu icon" className="myIcon"/>
                             </div>
                             <span>My Profile</span>
                         </div>
-                        <div className="list-menu-item">
+                        <div className="list-menu-item clickable">
                             <div className="myMenu">
                                 <img src="/img/icons/person.svg" alt="menu icon" className="myIcon"/>
                             </div>
                             <span>My Courses</span>
                         </div>
-                        <div className="list-menu-item">
+                        <div className="list-menu-item clickable">
                             <div className="myMenu">
                                 <img src="/img/icons/person.svg" alt="menu icon" className="myIcon"/>
                             </div>
@@ -67,9 +78,9 @@ render(){
                         </div>
                     </div>
                 </div>
-                <div className="container-page">
+                <div id="container" className="container-page" style={{width: "calc(100% - 200px)",marginLeft:"200px"}}>
             <div className="myToolbar">
-                <div className="myMenu">
+                <div className="myMenu clickable">
                     <img src="/img/icons/menu.png" alt="menu icon" className="myIcon" onClick={this.drawerState}/>
                 </div>
                 <h3>Courses and Lessons</h3>

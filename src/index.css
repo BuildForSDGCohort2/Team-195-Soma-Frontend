@@ -342,7 +342,6 @@ body, html, .App, #root, .auth-wrapper {
       .list-menu-item{
         width: 100%;
         border-bottom: solid 1px #ddd;
-        cursor: pointer;
       }
 
       .list-menu-item:hover{
@@ -376,20 +375,22 @@ body, html, .App, #root, .auth-wrapper {
         top: 65px;
         position: absolute;
       }
+
+      .clickable{
+        cursor: pointer;
+      }
+
       .myMenu{
         width: 40px;
         height: 40px;
-        padding: 5px;
-        cursor: pointer;
-        
+        padding: 10px;
+        border-radius: 80%;
       }
+      
       .myIcon{
         width:24px;
         height:24px;
         float: left;
-        
-        /*
-        background-color: white;*/
       }
 
       .myToolbar{
@@ -407,6 +408,7 @@ body, html, .App, #root, .auth-wrapper {
         text-align: center;
         top: -30px;
         position: relative;
+        margin-left: 41px;
       }
 
       .course-card{
@@ -423,7 +425,7 @@ body, html, .App, #root, .auth-wrapper {
         padding: 10px;
       }
 
-      .course-card:hover{
+      .course-card:hover, .myMenu:hover{
         background-color: rgba(110, 107, 107, 0.4);
       }
 
