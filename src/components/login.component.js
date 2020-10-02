@@ -43,23 +43,62 @@
 // }
 
 import React, { Component } from "react";
-
+import { Redirect } from "react-router-dom";
+import axios from 'axios';
 export default class Login extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+  
+          email: null,
+          password: null,
+          
+
+        }
+      }
+      handleChange =(e) =>{
+          const name= e.target.name;
+          const value=e.target.value;
+          this.setState({
+              [name]:value
+          })
+      }
+      handleSubmit=(e)=>{
+          e.preventDefault();
+          console.log(this.state);
+          const data= this.state;
+          
+          axios.post('https://team-195-soma-backend.herokuapp.com/api/login', data)
+      .then(res => {
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', res.data.user);
+        return <Redirect to='/course'/>;
+        console.log(res);
+        console.log(res.data);
+      })
+
+      }
+    
     render() {
+        const token=localStorage.getItem('token');
+        if (token){
+
+return <Redirect to='/courses'/>;
+        }
         return (
-            <form>
+            <form  onSubmit ={this.handleSubmit}>
                 <div className="auth-wrapper">
         <div className="auth-inner">
                 <h3>Sign In</h3>
 
                 <div className="form-group">
                     <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
+                    <input type="email" name="email" onChange={this.handleChange} className="form-control" placeholder="Enter email" />
                 </div>
 
                 <div className="form-group">
                     <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
+                    <input type="password"  name= "password" onChange={this.handleChange} className="form-control" placeholder="Enter password" />
                 </div>
 
                 <div className="form-group">
