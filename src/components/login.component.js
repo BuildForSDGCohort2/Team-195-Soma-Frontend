@@ -68,13 +68,16 @@ export default class Login extends Component {
           console.log(this.state);
           const data= this.state;
           
-          axios.post('https://team-195-soma-backend.herokuapp.com/api/login', data)
+          axios.post('https://soma.local:84/api/login', data)
       .then(res => {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', res.data.user);
-        return <Redirect to='/course'/>;
+        
         console.log(res);
         console.log(res.data);
+        if(res.data.user.role_id===1)
+             return <Redirect to='/course'/>;
+        else return <Redirect to='/student'/>;
       })
 
       }
@@ -82,8 +85,11 @@ export default class Login extends Component {
     render() {
         const token=localStorage.getItem('token');
         if (token){
+        const user=localStorage.getItem("user")
 
-return <Redirect to='/courses'/>;
+        if(user.role_id===1)
+             return <Redirect to='/course'/>;
+        else return <Redirect to='/student'/>;
         }
         return (
             <form  onSubmit ={this.handleSubmit}>
