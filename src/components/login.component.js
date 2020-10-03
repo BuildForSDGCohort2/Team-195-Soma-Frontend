@@ -78,6 +78,11 @@ export default class Login extends Component {
         if(res.data.user.role_id===1)
              return <Redirect to='/course'/>;
         else return <Redirect to='/student'/>;
+      }).catch((err)=>{
+          let bl=document.getElementById("error")
+          let msg=err.contains("401")?"Login/Password invalid":"Network Error. Check your network and retry."
+          bl.innerHTML=msg
+          bl.style.display="block"
       })
 
       }
@@ -92,7 +97,34 @@ export default class Login extends Component {
         else return <Redirect to='/student'/>;
         }
         return (
-            <form  onSubmit ={this.handleSubmit}>
+            <div id="main-container">
+            <div className="vacenter" >
+            <p className="appName">SOMA APP</p><br/>
+            <p className="myAuth">Authentification Page</p>
+            <hr style={{width:"150px"}}/><br/>
+
+            <div className="myContent">
+                <p>Enter your username and your password to log in</p> <br/>
+                <div className="myLogin">
+                <form  onSubmit ={this.handleSubmit}>
+                    <p><input className="form-control" type="email" name="email" onChange={this.handleChange} placeholder="Enter email" /></p>
+                    
+                    <p><input className="form-control" type="password" name="password" onChange={this.handleChange} placeholder="Enter password"/></p><br/>
+                    <p><input className="btn btn-primary btn-block" type="submit" value="Sign In"/></p>
+					<p> 
+						<input type="checkbox" name="remember-me" className="custom-control-input" id="remember-me" /> 
+                        <label className="bold-font" for="remember-me">Remember me</label>
+					</p>
+                    </form>
+                    <div id="error" className="tips_wrap" style={{display:"none"}}>
+                      
+                    </div>
+                </div><br/>
+            </div>
+            </div>
+        </div>
+
+            /*<form  onSubmit ={this.handleSubmit}>
                 <div className="auth-wrapper">
         <div className="auth-inner">
                 <h3>Sign In</h3>
@@ -120,8 +152,9 @@ export default class Login extends Component {
                 </p>
                 </div>
                 </div>
-            </form>
-            
+        </form>*/
+        
+        
         );
     }
 }
