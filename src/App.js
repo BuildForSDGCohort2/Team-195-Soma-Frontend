@@ -91,7 +91,7 @@ function App() {
           {/*</div>
           </div> <Hero/> <Footer /> </Layout> */}
           
-        </div>
+        
 
     </Router>
   );
