@@ -1,9 +1,22 @@
 
 import React, { Component } from "react";
-
+import { Redirect } from "react-router-dom";
 
 export default class Home extends Component {
     render() {
+      const token=localStorage.getItem('token');
+        if (token){
+        const user=localStorage.getItem("user")
+        console.log("logged user ",user)
+        if(user.role_id===1)
+             return <Redirect to='/course'/>;
+        else return <Redirect to='/student'/>;
+        }else{
+          console.log("no logged user ");
+          return <Redirect to='/sign-in' />;
+
+            }
+            
         return (
           <div>
             <section className="colorlib-experience" data-section="timeline">

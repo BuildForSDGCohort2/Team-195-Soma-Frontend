@@ -21,16 +21,22 @@ export default class SignUp extends Component {
               [name]:value
           })
       }
+
       handleSubmit=(e)=>{
           e.preventDefault();
           console.log(this.state);
           const data= this.state;
           
-          axios.post('https://team-195-soma-backend.herokuapp.com/api/register', data)
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-      })
+          axios
+          .post('http://soma.local:84/api/register', data)
+          .then(res => {
+             console.log(res);
+             console.log(res.data);
+           })
+          .catch((err)=>{
+            console.log("register error ",err)
+          })
+
 
       }
     
@@ -63,7 +69,7 @@ export default class SignUp extends Component {
                 </div>
                 <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
                 <p className="forgot-password text-right">
-                    Already registered <a href="www.facebook.com.com">sign in?</a>
+                    Already registered <a href="/sign-in">sign in?</a>
                 </p>
                 </div>
                 </div>

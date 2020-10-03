@@ -65,16 +65,25 @@ export default class Login extends Component {
       }
       handleSubmit=(e)=>{
           e.preventDefault();
-          console.log(this.state);
+          console.log("state",this.state);
           const data= this.state;
           
-          axios.post('https://team-195-soma-backend.herokuapp.com/api/login', data)
+          axios.post('https://soma.local:84/api/login', data)
       .then(res => {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', res.data.user);
-        return <Redirect to='/course'/>;
+        
         console.log(res);
         console.log(res.data);
+        if(res.data.user.role_id===1)
+             return <Redirect to='/course'/>;
+        else return <Redirect to='/student'/>;
+      }).catch((err)=>{
+        console.log("logging eeror ",err);
+          let bl=document.getElementById("error")
+          /*let msg=err.includes("401")?"Login/Password invalid":"Network Error. Check your network and retry."
+          bl.innerHTML=msg
+          bl.style.display="block"*/
       })
 
       }
@@ -82,11 +91,42 @@ export default class Login extends Component {
     render() {
         const token=localStorage.getItem('token');
         if (token){
+        const user=localStorage.getItem("user")
 
-return <Redirect to='/courses'/>;
+        if(user.role_id===1)
+             return <Redirect to='/course'/>;
+        else return <Redirect to='/student'/>;
         }
         return (
-            <form  onSubmit ={this.handleSubmit}>
+            <div id="container">
+            <div className="vacenter" >
+            <p className="appName">SOMA APP</p><br/>
+            <p className="myAuth">Authentification Page</p>
+            <hr style={{width:"150px"}}/><br/>
+
+            <div className="myContent">
+                <p>Enter your username and your password to log in</p> <br/>
+                <div className="myLogin">
+                <form  onSubmit ={this.handleSubmit}>
+                    <p><input className="form-control" type="email" name="email" onChange={this.handleChange} placeholder="Enter email" /></p>
+                    
+                    <p><input className="form-control" type="password" name="password" onChange={this.handleChange} placeholder="Enter password"/></p><br/>
+                    <p><input className="btn btn-primary btn-block" type="submit" value="Sign In"/></p>
+					<p> 
+						<input type="checkbox" name="remember-me" value="remember-me" id="remember-me" /> 
+                        <label className="bold-font" for="remember-me">Remember me</label>
+					</p>
+                    <a style={{color:"white",textAlign:"center",fontSize:"medium",marginLeft:"30%"}} href="/sign-up">Create your account</a>
+                    </form>
+                    <div id="error" className="tips_wrap" style={{display:"none"}}>
+                      
+                    </div>
+                </div><br/>
+            </div>
+            </div>
+        </div>
+
+            /*<form  onSubmit ={this.handleSubmit}>
                 <div className="auth-wrapper">
         <div className="auth-inner">
                 <h3>Sign In</h3>
@@ -114,8 +154,9 @@ return <Redirect to='/courses'/>;
                 </p>
                 </div>
                 </div>
-            </form>
-            
+        </form>*/
+        
+        
         );
     }
 }

@@ -2,7 +2,7 @@ import React from "react";
 
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 import Footer from "./components/footer.component";
 
@@ -25,9 +25,9 @@ function App() {
   
   return (
     <Router>
-      <Layout>
+      
         <div className="App">
-          {/* <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+          {/* <Layout> <nav className="navbar navbar-expand-lg navbar-light fixed-top">
             <div className="container">
               <Link className="navbar-brand" to={"/"}>
                 Soma
@@ -61,10 +61,11 @@ function App() {
                 </ul>
               </div>
             </div>
+            <div className="main">
+            <div className="page">
           </nav> */}
 
-          <div className="main">
-            <div className="page">
+          
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/sign-in" component={Login} />
@@ -74,12 +75,12 @@ function App() {
                 <Route path="/category" component={Category} />
 
               </Switch>
-            </div>
-          </div>
-          {/* <Hero/> */}
-          <Footer />
+            
+          {/*</div>
+          </div> <Hero/> <Footer /> </Layout> */}
+          
         </div>
-      </Layout>
+      
     </Router>
   );
 }
