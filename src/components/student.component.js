@@ -35,7 +35,7 @@ drawerState(e){
 }
 
 getData(){
-    axios.post('http://soma.local:84/api/user-data',{case:0})
+    axios.post('https://team-195-soma-backend.herokuapp.com/api/user-data',{case:0})
     .then(({data}) => {
       let c = data.courses;
       this.setState({ course:c });

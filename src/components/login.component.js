@@ -68,7 +68,7 @@ export default class Login extends Component {
           console.log("state",this.state);
           const data= this.state;
           
-          axios.post('https://soma.local:84/api/login', data)
+          axios.post('https://team-195-soma-backend.herokuapp.com/api/login', data)
       .then(res => {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', res.data.user);

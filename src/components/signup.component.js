@@ -28,7 +28,7 @@ export default class SignUp extends Component {
           const data= this.state;
           
           axios
-          .post('http://soma.local:84/api/register', data)
+          .post('https://team-195-soma-backend.herokuapp.com/api/register', data)
           .then(res => {
              console.log(res);
              console.log(res.data);
