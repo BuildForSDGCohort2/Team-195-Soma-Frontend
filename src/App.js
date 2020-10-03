@@ -20,12 +20,13 @@ import Menu from './components/menu.component'
 import Navbar from './components/navbar.component';
 
 import Layout from "./hoc/Layout/Layout.component";
+import Students from "./components/student.component";
 
 function App() {
   
   return (
     <Router>
-      
+
         <div className="App">
           {/* <Layout> <nav className="navbar navbar-expand-lg navbar-light fixed-top">
             <div className="container">
@@ -62,25 +63,36 @@ function App() {
               </div>
             </div>
             <div className="main">
-            <div className="page">
+
+          <div className="page">
+           </div>
+          </div>
           </nav> */}
 
-          
+
               <Switch>
+                
                 <Route exact path="/" component={Home} />
                 <Route path="/sign-in" component={Login} />
                 <Route path="/sign-up" component={SignUp} />
                 <Route path="/about" component={About} />
                 <Route path="/courses" component={Courses} />
                 <Route path="/category" component={Category} />
-
+                <Route path="/student" component={Students} />
+                
               </Switch>
-            
+
+           
+          {/* <Hero/> */}
+         { /*<Footer />*/}
+        </div>
+        {/*<Layout>*/}
+
           {/*</div>
           </div> <Hero/> <Footer /> </Layout> */}
           
         </div>
-      
+
     </Router>
   );
 }
