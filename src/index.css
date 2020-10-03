@@ -305,7 +305,7 @@ body, html, .App, #root, .auth-wrapper {
         float: right;
       }
 
-      .main-container { 
+      #container { 
         width: 100%;
         height: 100%;
         position: absolute;
@@ -320,8 +320,8 @@ body, html, .App, #root, .auth-wrapper {
   
         width: 100%;
         height: 100%;
-        opacity: 1;
-        background-color: rgba(0,124,176,0.8);
+       
+        background-color: rgba(15, 176, 0, 0.6);
         background-size: cover;
         position: absolute;
         overflow: hidden;
@@ -345,12 +345,13 @@ body, html, .App, #root, .auth-wrapper {
       }
 
       .appName{
-        color: #1D1D1D;
+        color: white;
         text-align: center;
         font-weight: bold;
         font-size: 35px;
+        margin-top: 10%;
       }
 
       .myLogin { overflow: hidden; padding: 1px; }
-
-      .tips_wrap { height: 24px; margin: 5px 0; padding: 0 20px; }
+      .myContent p { margin: 0; padding: 2px 20px; color: #fff; }
+      .tips_wrap { height: 24px; margin: 5px 0; padding: 0 20px;color: #c00; }

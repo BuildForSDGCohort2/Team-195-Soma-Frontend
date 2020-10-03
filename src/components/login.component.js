@@ -65,7 +65,7 @@ export default class Login extends Component {
       }
       handleSubmit=(e)=>{
           e.preventDefault();
-          console.log(this.state);
+          console.log("state",this.state);
           const data= this.state;
           
           axios.post('https://soma.local:84/api/login', data)
@@ -79,10 +79,11 @@ export default class Login extends Component {
              return <Redirect to='/course'/>;
         else return <Redirect to='/student'/>;
       }).catch((err)=>{
+        console.log("logging eeror ",err);
           let bl=document.getElementById("error")
-          let msg=err.contains("401")?"Login/Password invalid":"Network Error. Check your network and retry."
+          /*let msg=err.includes("401")?"Login/Password invalid":"Network Error. Check your network and retry."
           bl.innerHTML=msg
-          bl.style.display="block"
+          bl.style.display="block"*/
       })
 
       }
@@ -97,7 +98,7 @@ export default class Login extends Component {
         else return <Redirect to='/student'/>;
         }
         return (
-            <div id="main-container">
+            <div id="container">
             <div className="vacenter" >
             <p className="appName">SOMA APP</p><br/>
             <p className="myAuth">Authentification Page</p>
@@ -112,9 +113,10 @@ export default class Login extends Component {
                     <p><input className="form-control" type="password" name="password" onChange={this.handleChange} placeholder="Enter password"/></p><br/>
                     <p><input className="btn btn-primary btn-block" type="submit" value="Sign In"/></p>
 					<p> 
-						<input type="checkbox" name="remember-me" className="custom-control-input" id="remember-me" /> 
+						<input type="checkbox" name="remember-me" value="remember-me" id="remember-me" /> 
                         <label className="bold-font" for="remember-me">Remember me</label>
 					</p>
+                    <a style={{color:"white",textAlign:"center",fontSize:"medium",marginLeft:"30%"}} href="/sign-up">Create your account</a>
                     </form>
                     <div id="error" className="tips_wrap" style={{display:"none"}}>
                       
