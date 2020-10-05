@@ -5,9 +5,10 @@ import { Redirect } from "react-router-dom";
 export default class Home extends Component {
     render() {
       const token=localStorage.getItem('token');
+      
         if (token){
         const user=localStorage.getItem("user")
-        console.log("logged user ",user)
+        console.log("logged user ",token)
         if(user.role_id===1)
              return <Redirect to='/course'/>;
         else return <Redirect to='/student'/>;

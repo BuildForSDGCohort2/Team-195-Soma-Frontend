@@ -68,15 +68,16 @@ export default class Login extends Component {
           console.log("state",this.state);
           const data= this.state;
           
-          axios.post('https://soma.local:84/api/login', data)
+       axios.post('http://soma.local:84/api/login', data)
       .then(res => {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', res.data.user);
         
-        console.log(res);
-        console.log(res.data);
-        if(res.data.user.role_id===1)
+        
+        if(res.data.user.role_id===1){
+            console.log("admin logged",res.data.user.role_id)
              return <Redirect to='/course'/>;
+            }
         else return <Redirect to='/student'/>;
       }).catch((err)=>{
         console.log("logging eeror ",err);
@@ -111,7 +112,7 @@ export default class Login extends Component {
                     <p><input className="form-control" type="email" name="email" onChange={this.handleChange} placeholder="Enter email" /></p>
                     
                     <p><input className="form-control" type="password" name="password" onChange={this.handleChange} placeholder="Enter password"/></p><br/>
-                    <p><input className="btn btn-primary btn-block" type="submit" value="Sign In"/></p>
+                    <p><button className="btn btn-primary btn-block" type="submit">Sign In</button></p>
 					<p> 
 						<input type="checkbox" name="remember-me" value="remember-me" id="remember-me" /> 
                         <label className="bold-font" for="remember-me">Remember me</label>
