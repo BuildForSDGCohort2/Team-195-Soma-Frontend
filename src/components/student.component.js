@@ -35,6 +35,14 @@ drawerState(e){
 }
 
 getData(){
+    
+   //for(let i=0;i<localStorage.length;i++)
+        //let userData=localStorage.getItem("user")
+        /*for (let ind = 0; ind < Object.length(userData); ind++) {
+            console.log("value ",userData.ind)
+        }*/
+       // localStorage.clear()
+       
     axios.post('http://soma.local:84/api/user-data',{case:0})
     .then(({data}) => {
       let c = data.courses;
