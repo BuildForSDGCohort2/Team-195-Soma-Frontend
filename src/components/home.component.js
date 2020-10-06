@@ -18,9 +18,9 @@ export default class Home extends Component {
 
     if (token){
       const user=JSON.parse(localStorage.getItem("user"))
-      console.log("logged user ",token,"\nUser ",user)
+      console.log("logged user ",user)
       if(user.role_id===1)
-           this.props.history.push('/courses');
+           this.props.history.push('/adminPage');
       else this.props.history.push('/student');
       }else{
         console.log("no logged user ");

@@ -21,6 +21,7 @@ import Navbar from './components/navbar.component';
 
 import Layout from "./hoc/Layout/Layout.component";
 import Students from "./components/student.component";
+import AdminPage from "./components/admin.component";
 
 function App() {
   
@@ -75,8 +76,9 @@ function App() {
                 <Route path="/sign-in" component={Login} />
                 <Route path="/sign-up" component={SignUp} />
                 <Route path="/about" component={About} />
-                <Route path="/courses" component={Courses} />
-                <Route path="/category" component={Category} />
+                {/*<Route path="/courses" component={Courses} />
+                <Route path="/category" component={Category} />*/}
+                <Route path="/adminPage" component={AdminPage} />
                 <Route path="/student" component={Students} />
                 
               </Switch>

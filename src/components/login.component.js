@@ -63,9 +63,9 @@ export default class Login extends Component {
         
         if (token){
           const user=localStorage.getItem("user")
-          console.log("logged user ",token,"\nUser ",user)
+          console.log("logged user ",user)
           if(user.role_id===1)
-               this.props.history.push('/courses');
+               this.props.history.push('/adminPage');
           else this.props.history.push('/student');
           }
             
@@ -90,7 +90,7 @@ export default class Login extends Component {
         localStorage.setItem('token', res.data.success.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
         if(res.data.user.role_id===1)
-             this.props.history.push('/courses')
+             this.props.history.push('/adminPage')
         else this.props.history.push('/student')
         
       }).catch((err)=>{
@@ -114,7 +114,7 @@ export default class Login extends Component {
         else return <Redirect to='/student'/>;
         }*/
         return (
-            <div id="container">
+            <div id="container" className="login-conatiner">
             <div className="vacenter" >
             <p className="appName">SOMA APP</p><br/>
             <p className="myAuth">Authentification Page</p>

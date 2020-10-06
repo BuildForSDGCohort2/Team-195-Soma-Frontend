@@ -251,7 +251,7 @@ body, html, .App, #root, .auth-wrapper {
       .fill-form{
         
         width: 20%;
-        height: 20%;
+        height: 30%;
         margin-top: 15%;
         margin-left: 40%;
         position: relative;
@@ -312,7 +312,7 @@ body, html, .App, #root, .auth-wrapper {
         float: right;
       }
 
-      #container { 
+      .login-container { 
         width: 100%;
         height: 100%;
         position: absolute;
