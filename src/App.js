@@ -26,7 +26,6 @@ function App() {
   
   return (
     <Router>
-
         <div className="App">
           {/* <Layout> <nav className="navbar navbar-expand-lg navbar-light fixed-top">
             <div className="container">
@@ -81,18 +80,12 @@ function App() {
                 <Route path="/student" component={Students} />
                 
               </Switch>
-
-           
-          {/* <Hero/> */}
-         { /*<Footer />*/}
-        </div>
-        {/*<Layout>*/}
-
+            
           {/*</div>
           </div> <Hero/> <Footer /> </Layout> */}
           
-        
-
+        </div>
+      
     </Router>
   );
 }

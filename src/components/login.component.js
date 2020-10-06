@@ -52,10 +52,25 @@ export default class Login extends Component {
   
           email: null,
           password: null,
-          
 
         }
+       
       }
+
+      componentDidMount(){
+        
+        const token=localStorage.getItem("token");
+        
+        if (token){
+          const user=localStorage.getItem("user")
+          console.log("logged user ",token,"\nUser ",user)
+          if(user.role_id===1)
+               this.props.history.push('/courses');
+          else this.props.history.push('/student');
+          }
+            
+      }
+
       handleChange =(e) =>{
           const name= e.target.name;
           const value=e.target.value;
@@ -63,40 +78,41 @@ export default class Login extends Component {
               [name]:value
           })
       }
-      handleSubmit=(e)=>{
+
+
+     handleSubmit=(e)=>{
           e.preventDefault();
-          console.log("state",this.state);
+          //console.log("state",this.state);
           const data= this.state;
           
-          axios.post('https://team-195-soma-backend.herokuapp.com/api/login', data)
+      axios.post('http://soma.local:84/api/login', data)
       .then(res => {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('user', res.data.user);
-        
-        console.log(res);
-        console.log(res.data);
+        localStorage.setItem('token', res.data.success.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
         if(res.data.user.role_id===1)
-             return <Redirect to='/course'/>;
-        else return <Redirect to='/student'/>;
+             this.props.history.push('/courses')
+        else this.props.history.push('/student')
+        
       }).catch((err)=>{
         console.log("logging eeror ",err);
           let bl=document.getElementById("error")
-          /*let msg=err.includes("401")?"Login/Password invalid":"Network Error. Check your network and retry."
+          let msg=err.includes("401")?"Login/Password invalid":"Network Error. Check your network and retry."
           bl.innerHTML=msg
-          bl.style.display="block"*/
+          bl.style.display="block"
       })
+
 
       }
     
     render() {
-        const token=localStorage.getItem('token');
+        /*const token=localStorage.getItem('token');
         if (token){
         const user=localStorage.getItem("user")
 
         if(user.role_id===1)
              return <Redirect to='/course'/>;
         else return <Redirect to='/student'/>;
-        }
+        }*/
         return (
             <div id="container">
             <div className="vacenter" >
@@ -107,14 +123,14 @@ export default class Login extends Component {
             <div className="myContent">
                 <p>Enter your username and your password to log in</p> <br/>
                 <div className="myLogin">
-                <form  onSubmit ={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit}>
                     <p><input className="form-control" type="email" name="email" onChange={this.handleChange} placeholder="Enter email" /></p>
                     
                     <p><input className="form-control" type="password" name="password" onChange={this.handleChange} placeholder="Enter password"/></p><br/>
-                    <p><input className="btn btn-primary btn-block" type="submit" value="Sign In"/></p>
+                    <p><button className="btn btn-primary btn-block" type="submit">Sign In</button></p>
 					<p> 
 						<input type="checkbox" name="remember-me" value="remember-me" id="remember-me" /> 
-                        <label className="bold-font" for="remember-me">Remember me</label>
+                        <label className="bold-font" htmlFor="remember-me">Remember me</label>
 					</p>
                     <a style={{color:"white",textAlign:"center",fontSize:"medium",marginLeft:"30%"}} href="/sign-up">Create your account</a>
                     </form>

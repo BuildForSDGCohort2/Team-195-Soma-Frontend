@@ -3,20 +3,35 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 
 export default class Home extends Component {
-    render() {
-      const token=localStorage.getItem('token');
-        if (token){
-        const user=localStorage.getItem("user")
-        console.log("logged user ",user)
-        if(user.role_id===1)
-             return <Redirect to='/course'/>;
-        else return <Redirect to='/student'/>;
-        }else{
-          console.log("no logged user ");
-          return <Redirect to='/sign-in' />;
+  constructor(props){
+    super(props)
+    this.state={
+      user:{},
+      token:""
+    }
+  }
+  componentDidMount(){
+    //localStorage.clear()
+    const token=localStorage.getItem("token");
+    
+    //this.setState({token:token,user:JSON.parse(user)})
 
-            }
-            
+    if (token){
+      const user=JSON.parse(localStorage.getItem("user"))
+      console.log("logged user ",token,"\nUser ",user)
+      if(user.role_id===1)
+           this.props.history.push('/courses');
+      else this.props.history.push('/student');
+      }else{
+        console.log("no logged user ");
+        this.props.history.push('/sign-in');
+
+          }
+        
+  }
+    render() {
+
+      
         return (
           <div>
             <section className="colorlib-experience" data-section="timeline">
