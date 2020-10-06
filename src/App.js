@@ -20,6 +20,7 @@ import Menu from './components/menu.component'
 import Navbar from './components/navbar.component';
 
 import Layout from "./hoc/Layout/Layout.component";
+import Students from "./components/student.component";
 
 function App() {
   
@@ -67,13 +68,15 @@ function App() {
 
           
               <Switch>
+                
                 <Route exact path="/" component={Home} />
                 <Route path="/sign-in" component={Login} />
                 <Route path="/sign-up" component={SignUp} />
                 <Route path="/about" component={About} />
                 <Route path="/courses" component={Courses} />
                 <Route path="/category" component={Category} />
-
+                <Route path="/student" component={Students} />
+                
               </Switch>
             
           {/*</div>

@@ -241,6 +241,13 @@ body, html, .App, #root, .auth-wrapper {
       font-size: 16px; 
     }
 
+      .myConatiner{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+
       .fill-form{
         
         width: 20%;
@@ -355,3 +362,142 @@ body, html, .App, #root, .auth-wrapper {
       .myLogin { overflow: hidden; padding: 1px; }
       .myContent p { margin: 0; padding: 2px 20px; color: #fff; }
       .tips_wrap { height: 24px; margin: 5px 0; padding: 0 20px;color: #c00; }
+      .myDrawer{
+          position: absolute;
+          width: 200px;
+          height: 100%;
+          background-color: whitesmoke;
+          float: left;
+          margin: none;
+          border-right: 1px solid #ddd
+      }
+      .user-profile{
+        width: 100%;
+        height: 150px;
+        position: absolute;
+        top: 0;
+      }
+
+      .user-profile span{
+        margin-left: 5px;
+      }
+
+      .menu-list{
+        width: 100%;
+        height: calc(100% - 150px);
+        margin-top: 150px;
+        overflow: auto;
+      }
+
+      .list-menu-item{
+        width: 100%;
+        border-bottom: solid 1px #ddd;
+      }
+
+      .list-menu-item:hover{
+        background-color: rgba(78, 79, 84, 0.522);
+      }
+
+      .list-menu-item span{
+        margin-top: -30px;
+      
+        float: left;
+        margin-left: 40px;
+        font-size: small;
+      }
+
+      .container-page{
+          position: absolute;
+          width: calc(100% - 200px);
+          height: 100%;
+          float: left;
+          margin-left: 200px;
+        }
+
+      #topic{
+        height:50%;
+        width:100%;
+        background: url("/img/back4.jpg") no-repeat;
+        background-size: cover;
+        background-position: bottom;
+        float: left;
+        left: 0;
+        top: 65px;
+        position: absolute;
+      }
+
+      .clickable{
+        cursor: pointer;
+      }
+
+      .myMenu{
+        width: 40px;
+        height: 40px;
+        padding: 10px;
+        border-radius: 80%;
+      }
+      
+      .myIcon{
+        width:24px;
+        height:24px;
+        float: left;
+      }
+
+      .myToolbar{
+        width: 100%;
+        height: 60px;
+        padding: 5px;
+        background-color:#3a8eb3;
+        position: absolute;
+        float: left;
+        color: white;
+        
+      }
+
+      .myToolbar h3{
+        text-align: center;
+        top: -30px;
+        position: relative;
+        margin-left: 41px;
+      }
+
+      .course-card{
+        color: black;
+        width:225px;
+        height:270px;
+        overflow: auto;
+        margin-top:27%;
+        background-color:transparent;
+        position: relative;
+        float: left;
+        margin-left: 20px;
+        cursor: pointer;
+        padding: 10px;
+      }
+
+      .course-card:hover, .myMenu:hover{
+        background-color: rgba(110, 107, 107, 0.4);
+      }
+
+      .myAvatar{
+        width: 60px;
+        height: 60px;
+        border-radius: 100%;
+        padding: 15px;
+        padding-left: 17px;
+        top: 2%;
+        margin-bottom: 10px;
+        position: relative;
+      }
+
+      .bg-light-blue-10{
+        background-color: #01579b;
+      }
+
+      .bg-light-blue-14{
+        height: 100%;
+        margin-top: -10px;
+        background-color: #0091ea;
+      }
+
+  
