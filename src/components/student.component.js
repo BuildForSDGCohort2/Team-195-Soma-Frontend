@@ -16,7 +16,14 @@ export default class Students extends Component{
 }
 
 componentDidMount(){
-    this.getData()
+    const token=localStorage.getItem("token");
+        
+        if (token){
+          const user=JSON.parse(localStorage.getItem("user"))
+          console.log("logged user ",user)
+          this.setState({user:user})
+          this.getData()
+          }else this.props.history.push('/sign-in');
 }
 
 drawerState(e){
@@ -35,14 +42,7 @@ drawerState(e){
 }
 
 getData(){
-    
-   //for(let i=0;i<localStorage.length;i++)
-        //let userData=localStorage.getItem("user")
-        /*for (let ind = 0; ind < Object.length(userData); ind++) {
-            console.log("value ",userData.ind)
-        }*/
-       // localStorage.clear()
-       
+        
     axios.post('http://soma.local:84/api/user-data',{case:0})
     .then(({data}) => {
       let c = data.courses;
@@ -62,8 +62,8 @@ render(){
                 <div id="drawer" className="myDrawer" style={{display:"block"}}>
                     <div className="user-profile" style={{backgroundImage:"url('/img/wall.jpg')",backgroundSize:"cover"}}>
                         <img src="/img/me.jpg" width="80" height="80" alt="profile" style={{borderRadius:"80%"}}/><br/>
-                        <span style={{color:"white",fontSize:"medium",fontWeight:"bold",float:"left"}}>Mamadou Hady Diallo</span>
-                        <span style={{color:"white",fontSize:"small",fontWeight:"italic",float:"left",marginTop:"2px"}}>mhadysydney@gmail.com<br/>664-504-690</span>
+                        <span style={{color:"white",fontSize:"medium",fontWeight:"bold",float:"left"}}>{this.state.user.name}</span>
+                        <span style={{color:"white",fontSize:"small",fontWeight:"italic",float:"left",marginTop:"2px"}}>{this.state.user.email}</span>
                     </div>
                     <div className="menu-list">
                         <div className="list-menu-item clickable">

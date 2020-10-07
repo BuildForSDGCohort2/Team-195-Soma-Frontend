@@ -94,9 +94,9 @@ export default class Login extends Component {
         else this.props.history.push('/student')
         
       }).catch((err)=>{
-        console.log("logging eeror ",err);
+        console.log("logging error type ",err.message);
           let bl=document.getElementById("error")
-          let msg=err.includes("401")?"Login/Password invalid":"Network Error. Check your network and retry."
+          let msg=err.message.includes("401")?"Login/Password invalid":"Network Error. Check your network and retry."
           bl.innerHTML=msg
           bl.style.display="block"
       })
@@ -114,7 +114,7 @@ export default class Login extends Component {
         else return <Redirect to='/student'/>;
         }*/
         return (
-            <div id="container" className="login-conatiner">
+            <div id="container" className="login-container">
             <div className="vacenter" >
             <p className="appName">SOMA APP</p><br/>
             <p className="myAuth">Authentification Page</p>

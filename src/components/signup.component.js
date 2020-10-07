@@ -10,8 +10,7 @@ export default class SignUp extends Component {
           email: null,
           password: null,
           password_confirmation: null,
-          role_id:'1',
-
+          role_id:2,
         }
       }
       handleChange =(e) =>{

@@ -15,7 +15,8 @@ code {
 
 * {
   box-sizing: border-box;
-}
+ }
+
 body {
   background: #FFFFFF !important;
   min-height: 100vh;
@@ -279,7 +280,7 @@ body, html, .App, #root, .auth-wrapper {
         height: 90%;
       }*/
 
-      .entry-form input[type="text"]{
+      /*.entry-form input[type="text"]{
         width: 50%;
         height: 30px;
         border-radius: 10px;
@@ -287,7 +288,7 @@ body, html, .App, #root, .auth-wrapper {
         border: black 0.3px solid;
         margin-top:3px;
         padding-left: 10px;
-      }
+      }*/
 
       .entry-form input[type="reset"]{
        

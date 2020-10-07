@@ -11,7 +11,7 @@ export default class Home extends Component {
     }
   }
   componentDidMount(){
-    //localStorage.clear()
+    localStorage.clear()
     const token=localStorage.getItem("token");
     
     //this.setState({token:token,user:JSON.parse(user)})
