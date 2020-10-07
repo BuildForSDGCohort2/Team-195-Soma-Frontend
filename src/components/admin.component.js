@@ -10,7 +10,8 @@ export default class Students extends Component{
     this.showForm=this.showForm.bind(this)
     this.onSubmit=this.onSubmit.bind(this)
     this.setFormValues=this.setFormValues.bind(this)
-    this.modelClicked=this.modelClicked.bind(this)
+    
+    this.manDialog=this.manDialog.bind(this)
 
     this.state={
         //data from api
@@ -51,6 +52,13 @@ export default class Students extends Component{
         contWidth:'',
         mLeft:'',
         user:{},
+        mediaLabel:'',
+        btnLabel:'New Category',
+        currentModel:0,
+        cols:[],
+        rows:[],
+        formAPI:'',
+        messageDialog:''
         
     }
     this.mediaLabel=''
@@ -59,6 +67,7 @@ export default class Students extends Component{
     this.cols=[];
     this.rows=[];
     this.formAPI=''
+    this.messageDialog=''
 }
 
 componentDidMount(){
@@ -69,17 +78,18 @@ componentDidMount(){
           const user=JSON.parse(localStorage.getItem("user"))
           console.log("logged user ",user)
           this.setState({user:user})
+
           this.getData(true)
-          this.interval=setInterval(() => {
-              this.getData(false)
-          }, 4000);
+          /*setTimeout(() => {
+              this.getData(true)
+          }, 1000);*/
 
           }else this.props.history.push('/sign-in');
 
 }
 
 componentWillUnmount(){
-    clearInterval(this.interval)
+   // clearInterval(this.interval)
 }
 
 setFormValues(e){
@@ -91,22 +101,30 @@ setFormValues(e){
 
   onSubmit(e){
     e.preventDefault()
-    axios.post("http://soma.local:84/api/man/"+this.formAPI, (this.state.form)).then(({data})=>{
+    axios.post("http://soma.local:84/api/man/"+this.state.formAPI, (this.state.form)).then(({data})=>{
 
     console.log("succes message:",data.message)
-
+    this.messageDialog=data.message
+    this.manDialog()
+    this.getData(false)
     }).catch(err=>{
       console.error("error from submit ",err);
+      this.messageDialog="An error occured"
+      this.manDialog()
     })
   }
   
 showForm(e){
     console.log(" formqt te before ",this.state.formState)
     this.setState({formState:!this.state.formState})
-    document.getElementById("fillForm").style.display=this.state.formState ? "block":"none"
+    document.getElementById("fillForm_"+this.currentModel).style.display=this.state.formState ? "block":"none"
     console.log(" formqt te after ",this.state.formState)
   }
 
+  manDialog(e){
+    let dialog=document.getElementById("dialog")
+    dialog.style.display=dialog.style.display==='none' ? "block":"none"
+  }
 
 drawerState(e){
     let w='',ml=''
@@ -122,14 +140,10 @@ drawerState(e){
     this.setState({drawer:!this.state.drawer})
     
 }
-modelClicked(e){
-    //let m=e.name
-    console.log("model cases ",e)
-    //this.switchModel(m)
-}
+
 switchModel(cases){
     //let cases=e.target.case
-    //console.log("model cases ",cases)
+    console.log("model cases ",cases)
     this.currentModel=cases
     let btnAdd=document.getElementById("btnAdd")
     if(btnAdd!==null)
@@ -138,41 +152,65 @@ switchModel(cases){
     switch (cases) {
         case 0:
             
-                this.rows=typeof(this.state.categories)!=='undefined'?this.state.categories:[]
-                this.cols=this.state.catCols
+                this.setState({
+                    rows:typeof(this.state.categories)!=='undefined'?this.state.categories:[],
+                    cols:this.state.catCols,
+                    btnLabel:'New Category',
+                    formAPI:'category'
+                })
+                /*this.cols=this.state.catCols
                 this.btnLabel='New Category'
-                this.formAPI='category'
+                this.formAPI='category'*/
             
             break;
 
         case 1:
-            
-                this.rows=typeof(this.state.langs)!=='undefined'?this.state.langs:[]
+            this.setState({
+                rows:typeof(this.state.langs)!=='undefined'?this.state.langs:[],
+                cols:this.state.langCols,
+                btnLabel:'New Language',
+                formAPI:'language'
+            })
+               /* this.rows=typeof(this.state.langs)!=='undefined'?this.state.langs:[]
                 this.cols=this.state.langCols
                 this.btnLabel='New Language'
-                this.formAPI='language'
+                this.formAPI='language'*/
             break;
 
         case 2:
-            
-                this.rows=typeof(this.state.courses)!=='undefined'?this.state.courses:[]
+            this.setState({
+                rows:typeof(this.state.courses)!=='undefined'?this.state.courses:[],
+                cols:this.state.courseCols,
+                btnLabel:'New Course',
+                formAPI:'course'
+            })
+                /*this.rows=typeof(this.state.courses)!=='undefined'?this.state.courses:[]
                 this.cols=this.state.courseCols
                 this.btnLabel='New Course'
-                this.formAPI='course'
+                this.formAPI='course'*/
             break;
 
         case 3:
+            this.setState({
+                rows:typeof(this.state.lessons)!=='undefined'?this.state.lessons:[],
+                cols:this.state.lessCols,
+                btnLabel:'New Lesson',
+                formAPI:'lesson'
+            })
             
-                this.rows=typeof(this.state.lessons)!=='undefined'?this.state.lessons:[]
+                /*this.rows=typeof(this.state.lessons)!=='undefined'?this.state.lessons:[]
                 this.cols=this.state.lessCols
                 this.btnLabel='New Lesson'
-                this.formAPI='lesson'
+                this.formAPI='lesson'*/
             break;
 
         case 4:
-            
-                this.rows=typeof(this.state.users)!=='undefined'?this.state.users:[]
-                this.cols=this.state.userCols
+            this.setState({
+                rows:typeof(this.state.users)!=='undefined'?this.state.users:[],
+                cols:this.state.userCols,
+            })
+                /*this.rows=typeof(this.state.users)!=='undefined'?this.state.users:[]
+                this.cols=this.state.userCols*/
             
             break;
 
@@ -180,6 +218,7 @@ switchModel(cases){
         default:
             break;
     }
+    console.log("rows",this.rows,"\ncols ",this.cols)
 }
 
 getData(def){
@@ -195,9 +234,13 @@ getData(def){
           lessons:data.course.lessons
         });
 
-        def===true? this.switchModel(0):this.switchModel(this.currentModel)
+        if(def) {
+            this.switchModel(0)
+            console.log("case 0 launched ")
+        }
+        else this.switchModel(this.currentModel)
 
-        //console.log("admin data ",data)
+        console.log("def ",def)
       
     })
     .catch((error) => {
@@ -263,25 +306,25 @@ render(){
             </div>
             
             <div className="content-wrapper" style={{backgroundColor:"white",marginTop:"65px"}}>
-            <div className="card-body table-responsive p-0">
+            <div className="card-body table-responsive p-0" style={{marginLeft:"-10px"}}>
         
         <table className="table table-hover text-nowrap" style={{border:"1px solid black"}}>
           <thead>
               <tr>
-                    <td style={{width:"70%"}}><input id="btnAdd" type="button" className="btn btn-primary float-left" value={this.btnLabel} onClick={this.showForm} style={{display:"block"}}/></td>
+                    <td style={{width:"70%"}}><input id="btnAdd" type="button" className="btn btn-primary float-left" value={this.state.btnLabel} onClick={this.showForm} style={{display:"block"}}/></td>
                     <td style={{width:"50%"}}><input type="text" name="table_search" className="form-control float-right" placeholder="Search" style={{width:"60%"}}/></td>
               </tr>
               <tr></tr>
             <tr>
-              {this.cols.map(col=>(
+              {this.state.cols.map(col=>(
               <th key={col.id}>{col.label}</th>
               ))}
             </tr>
           </thead>
           <tbody >
-          {this.rows.map(row=>(
+          {this.state.rows.map(row=>(
             <tr key={row.id}>
-              {this.cols.map(col=>(
+              {this.state.cols.map(col=>(
               <td key={col.id}>{row[col.field]}</td>
               ))}
           {/*<td>{row.name}</td>
@@ -368,7 +411,7 @@ render(){
                 <br/>
             <label htmlFor="name">Name:</label><input id="name" name="name" className="form-control" value={this.state.form.name}  onChange={this.setFormValues} type="text" required/><br/>
             <label htmlFor="lnumber">Lesson Number:</label><input id="lnumber" name="lesson_number" className="form-control" type="text" value={this.state.form.lesson_number} onChange={this.setFormValues} required/><br/>
-            <label htmlFor="media">Course:</label>
+            <label htmlFor="media">Media Type:</label>
             <select id="media" name="media_type" className="form-control" type="text" value={this.state.form.media_type} onChange={this.setFormValues}>
             
                     <option  value='video'>Video</option>
@@ -384,6 +427,14 @@ render(){
             </div>
             </form>
           </div>
+          </div>
+
+          <div className="myDialog" id="dialog"  style={ {display:"none"} }>
+                <div className="myMenu">
+                    <img src="/img/icons/message.svg" alt="menu icon" className="myIcon"/>
+                </div><p>Information</p>
+            <p>{this.messageDialog}</p><br/>
+            <button type="submit" className="btn btn-success" onClick={this.manDialog}>Ok</button>
           </div>
 
           </div>

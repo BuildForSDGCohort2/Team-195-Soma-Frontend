@@ -97,8 +97,8 @@ export default class Login extends Component {
         console.log("logging error type ",err.message);
           let bl=document.getElementById("error")
           let msg=err.message.includes("401")?"Login/Password invalid":"Network Error. Check your network and retry."
-          bl.innerHTML=msg
-          bl.style.display="block"
+          bl.innerHTML="<p>"+msg+"</p>"
+          //bl.style.display="block"
       })
 
 
@@ -134,8 +134,8 @@ export default class Login extends Component {
 					</p>
                     <a style={{color:"white",textAlign:"center",fontSize:"medium",marginLeft:"30%"}} href="/sign-up">Create your account</a>
                     </form>
-                    <div id="error" className="tips_wrap" style={{display:"none"}}>
-                      
+                    <div id="error" className="tips_wrap" style={{display:"block"}}>
+                       
                     </div>
                 </div><br/>
             </div>
