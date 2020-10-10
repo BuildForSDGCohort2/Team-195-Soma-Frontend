@@ -85,7 +85,7 @@ export default class Login extends Component {
           //console.log("state",this.state);
           const data= this.state;
           
-      axios.post('http://soma.local:84/api/login', data)
+      axios.post('http://localhost:8000/api/login', data)
       .then(res => {
         localStorage.setItem('token', res.data.success.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
