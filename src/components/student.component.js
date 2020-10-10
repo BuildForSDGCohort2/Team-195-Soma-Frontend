@@ -11,7 +11,8 @@ export default class Students extends Component{
         lesson:[],
         drawer:false,
         contWidth:'',
-        mLeft:''
+        mLeft:'',
+        user:{}
     }
 }
 

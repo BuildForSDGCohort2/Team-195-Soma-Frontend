@@ -249,7 +249,7 @@ body, html, .App, #root, .auth-wrapper {
         margin: 0;
       }
 
-      .fill-form,.myDialog{
+      .fill-form{
         
         width: 30%;
         height: 80%;
@@ -266,6 +266,14 @@ body, html, .App, #root, .auth-wrapper {
         border-radius: 5px;
       }
       .myDialog{
+        width: 30%;
+        height: 50px;
+        margin-top: 15%;
+        margin-left: 40%;
+        position: relative;
+        background-color: white;
+        padding: 2px;
+        border-radius: 5px;
         z-index: 10000;
       }
       .fill-parent{

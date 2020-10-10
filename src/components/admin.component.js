@@ -40,14 +40,20 @@ export default class Students extends Component{
 
         //colums for each model
         catCols:[{id:0,label:"Name",field:"name"},{id:1,label:"Code",field:"code"},{id:2,label:"Created At",field:"created_at"}],
+
         langCols:[{id:0,label:"Name",field:"name"},{id:1,label:"Country",field:"country"},{id:2,label:"Created At",field:"created_at"}],
+        
         courseCols:[{id:0,label:"Name",field:"name"},
                     {id:1,label:"Description",field:"description"},
                     {id:2,label:"Created At",field:"created_at"}],
+
         lessCols:[{id:0,label:"Name",field:"name"},{id:1,label:"Lesson Number",field:"lesson_number"},
                   {id:2,label:"Created At",field:"created_at"}],
+
         userCols:[{id:0,label:"Name",field:"name"},{id:1,label:"Email",field:"email"},{id:2,label:"Created At",field:"created_at"}],
 
+        formState:true,
+        dialogState:true,
         drawer:false,
         contWidth:'',
         mLeft:'',
@@ -121,9 +127,11 @@ showForm(e){
     console.log(" formqt te after ",this.state.formState)
   }
 
-  manDialog(e){
+  manDialog(){
+      console.log("man dialog lunched")
+      this.setState({dialogState:!this.state.dialogState})
     let dialog=document.getElementById("dialog")
-    dialog.style.display=dialog.style.display==='none' ? "block":"none"
+    dialog.style.display=this.state.dialogState ? "block":"none"
   }
 
 drawerState(e){
@@ -216,6 +224,14 @@ switchModel(cases){
 
     
         default:
+            //localStorage.removeItem('token')
+            axios.post('http://soma.local:84/api/logout',{headers:{"Authorization":"Bearer   "+localStorage.getItem('token')}})
+            .then(({data}) => {
+                localStorage.removeItem('token')
+                console.log(data.message)
+            }).catch((err)=>{
+                console.log("error log out")
+            })
             break;
     }
     console.log("rows",this.rows,"\ncols ",this.cols)
@@ -294,6 +310,12 @@ render(){
                             </div>
                             <span>Registered Users</span>
                         </div>
+                        <div className="list-menu-item clickable" onClick={()=>this.switchModel(5)}>
+                            <div className="myMenu">
+                                <img src="/img/icons/exit_app.svg" alt="menu icon" className="myIcon"/>
+                            </div>
+                            <span>Log out</span>
+                        </div>
                     </div>
                     
                 </div>
@@ -305,8 +327,8 @@ render(){
                 <h3>Administration Page</h3>
             </div>
             
-            <div className="content-wrapper" style={{backgroundColor:"white",marginTop:"65px"}}>
-            <div className="card-body table-responsive p-0" style={{marginLeft:"-10px"}}>
+            <div className="content-wrapper" style={{backgroundColor:"white",marginTop:"65px",marginLeft:"10px"}}>
+            <div className="card-body table-responsive p-0">
         
         <table className="table table-hover text-nowrap" style={{border:"1px solid black"}}>
           <thead>
@@ -375,8 +397,9 @@ render(){
             <form className="entry-form" onSubmit={this.onSubmit}>
             <label htmlFor="name">Name:</label><input id="name" name="name" className="form-control" value={this.state.form.name}  onChange={this.setFormValues} type="text" required/><br/>
             <label htmlFor="description">Description:</label><textarea id="description" name="description" className="form-control" value={this.state.form.description} onChange={this.setFormValues} required/><br/>
-            <label htmlFor="lang">Name:</label>
-            <select id="lang" name="language" className="form-control" value={this.state.form.category} onChange={this.setFormValues} required>
+            <label htmlFor="lang">Language:</label>
+            <select id="lang" name="language" className="form-control" value={this.state.form.language} onChange={this.setFormValues} required>
+            <option value="0">--Select here--</option>
                 {this.state.langs.map(lang=>(
                     <option key={lang.id} value={lang.id}>{lang.name}</option>
                 ))}
@@ -384,6 +407,7 @@ render(){
                 <br/>
             <label htmlFor="cat">Category:</label>
             <select id="cat" name="category" className="form-control" type="text" value={this.state.form.category} onChange={this.setFormValues} required>
+            <option value="0">--Select here--</option>
             {this.state.categories.map(cat=>(
                     <option key={cat.id} value={cat.id}>{cat.name}</option>
             ))}

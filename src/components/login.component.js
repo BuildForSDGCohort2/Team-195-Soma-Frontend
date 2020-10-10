@@ -87,7 +87,7 @@ export default class Login extends Component {
           
       axios.post('http://soma.local:84/api/login', data)
       .then(res => {
-        localStorage.setItem('token', res.data.success.token);
+        localStorage.setItem('token', res.data.access_token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
         if(res.data.user.role_id===1)
              this.props.history.push('/adminPage')
