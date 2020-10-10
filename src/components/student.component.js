@@ -5,8 +5,10 @@ export default class Students extends Component{
     constructor(props){
     super(props);
     this.drawerState=this.drawerState.bind(this)
-    
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.state={
+        user:{},
         course:[],
         lesson:[],
         drawer:false,
@@ -14,6 +16,33 @@ export default class Students extends Component{
         mLeft:'',
         user:{}
     }
+}
+handleChange =(e) =>{
+    const name= e.target.name;
+    const value=e.target.value;
+    this.setState({
+        [name]:value
+    })
+}
+
+handleSubmit=(e)=>{
+    e.preventDefault();
+    console.log(this.state);
+    const data= this.state;
+    
+    axios
+    .post('http://localhost:8000/api/man/students', data)
+    .then(res => {
+       console.log(res);
+       console.log(res.data);
+       console.log("succes message:",data.message)
+       this.props.history.push('/classroom');
+     })
+    .catch((err)=>{
+      console.log("Enrollement error ",err)
+    })
+
+
 }
 
 componentDidMount(){
@@ -44,7 +73,7 @@ drawerState(e){
 
 getData(){
         
-    axios.post('http://soma.local:84/api/user-data',{case:0})
+    axios.post('http://localhost:8000/api/user-data',{case:0})
     .then(({data}) => {
       let c = data.courses;
       this.setState({ course:c });
@@ -106,12 +135,16 @@ render(){
                             </div>
                             <h6 style={{color:"white",textAlign:"center"}}>{course.name}</h6>
                             <p style={{color:"#1d1d1d",textAlign:"justify",backgroundColor:"#e0f7fa",padding:"5px"}}>{course.description}</p>
-                            <input type="button" className="btn btn-success" value="Enroll"/>
+                            <form onSubmit ={this.handleSubmit}>
+                            <input type="hidden" className="form-control" name="lesson" onChange={this.handleChange} placeholder="First name" />
+                            <input type="submit" className="btn btn-success" value="Enroll"/>
+                            </form>
                         </div>
                     </div>
                 ))}
             </div>
             </div>
+            
         </section> 
         </div>
 
