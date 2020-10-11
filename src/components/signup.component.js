@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component } from "react";
+import API_URL from "../apicommon";
 
 export default class SignUp extends Component {
 
@@ -27,7 +28,7 @@ export default class SignUp extends Component {
           const data= this.state;
           
           axios
-          .post('http://localhost:8000/api/register', data)
+          .post(API_URL+'register', data)
           .then(res => {
              console.log(res);
              console.log(res.data);

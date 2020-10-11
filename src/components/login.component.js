@@ -45,6 +45,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
+import API_URL from "../apicommon";
 export default class Login extends Component {
     constructor(props) {
         super(props)
@@ -85,7 +86,7 @@ export default class Login extends Component {
           //console.log("state",this.state);
           const data= this.state;
           
-      axios.post('http://localhost:8000/api/login', data)
+      axios.post(API_URL+'login', data)
       .then(res => {
         localStorage.setItem('token', res.data.access_token);
         localStorage.setItem('user', JSON.stringify(res.data.user));

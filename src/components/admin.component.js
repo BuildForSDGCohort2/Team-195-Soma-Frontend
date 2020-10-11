@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import API_URL from "../apicommon";
 
 export default class Students extends Component{
     constructor(props){
@@ -107,7 +108,7 @@ setFormValues(e){
 
   onSubmit(e){
     e.preventDefault()
-    axios.post("http://soma.local:84/api/man/"+this.state.formAPI, (this.state.form)).then(({data})=>{
+    axios.post(API_URL+"man/"+this.state.formAPI, (this.state.form)).then(({data})=>{
 
     console.log("succes message:",data.message)
     this.messageDialog=data.message
@@ -225,12 +226,21 @@ switchModel(cases){
     
         default:
             //localStorage.removeItem('token')
-            axios.post('http://soma.local:84/api/logout',{headers:{"Authorization":"Bearer   "+localStorage.getItem('token')}})
+            let config={
+                method: 'post',
+                url: API_URL+'logout',
+                headers:{
+                    Accept:'application/json',
+                    Authorization:"Bearer   "+localStorage.getItem('token')
+                }
+            }
+            axios(config)
             .then(({data}) => {
                 localStorage.removeItem('token')
                 console.log(data.message)
+                this.props.history.push("/")
             }).catch((err)=>{
-                console.log("error log out")
+                console.log("error log out ",err.message)
             })
             break;
     }
@@ -239,7 +249,7 @@ switchModel(cases){
 
 getData(def){
        
-    axios.get('http://soma.local:84/api/admin')
+    axios.get(API_URL+'admin')
     .then(({data}) => {
       
       this.setState({ 

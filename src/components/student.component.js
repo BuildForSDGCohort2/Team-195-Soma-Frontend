@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import API_URL from "../apicommon";
 
 export default class Students extends Component{
     constructor(props){
@@ -7,40 +8,60 @@ export default class Students extends Component{
     this.drawerState=this.drawerState.bind(this)
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    
+
     this.state={
-        user:{},
+        
         course:[],
         lesson:[],
         drawer:false,
         contWidth:'',
         mLeft:'',
-        user:{}
+        user:{},
+
     }
 }
+
 handleChange =(e) =>{
-    const name= e.target.name;
-    const value=e.target.value;
-    this.setState({
-        [name]:value
-    })
+    //const name= e.target.name;
+    
+
+    
 }
 
 handleSubmit=(e)=>{
-    e.preventDefault();
-    console.log(this.state);
-    const data= this.state;
+    //e.preventDefault();
+    let val =e.target.id;
+    val=parseInt(val)
+    let course=this.state.course
     
+    let enroledCourse=course.filter(c=>(c.id===val))[0]
+    
+    let firstLess=enroledCourse.lessons[0]
+    
+    console.log('enroled course ',enroledCourse,'\n enroled first less ',firstLess)
+    
+    
+    
+    if(typeof(firstLess)!=='undefined'){
+        const data= firstLess.id;
     axios
-    .post('http://localhost:8000/api/man/students', data)
+    .post(API_URL+'students', {lesson:data},{
+        headers:{
+            Authorization:"Bearer   "+localStorage.getItem('token')
+        }
+    })
     .then(res => {
-       console.log(res);
-       console.log(res.data);
+      
        console.log("succes message:",data.message)
        this.props.history.push('/classroom');
      })
     .catch((err)=>{
       console.log("Enrollement error ",err)
     })
+
+    }else console.log("Sorry No Lessons for this course choose another one. ")
 
 
 }
@@ -73,12 +94,11 @@ drawerState(e){
 
 getData(){
         
-    axios.post('http://localhost:8000/api/user-data',{case:0})
+    axios.post(API_URL+'user-data',{case:0})
     .then(({data}) => {
       let c = data.courses;
       this.setState({ course:c });
         console.log("course ",this.state.course)
-      
     })
     .catch((error) => {
       console.warn(error);
@@ -135,10 +155,9 @@ render(){
                             </div>
                             <h6 style={{color:"white",textAlign:"center"}}>{course.name}</h6>
                             <p style={{color:"#1d1d1d",textAlign:"justify",backgroundColor:"#e0f7fa",padding:"5px"}}>{course.description}</p>
-                            <form onSubmit ={this.handleSubmit}>
-                            <input type="hidden" className="form-control" name="lesson" onChange={this.handleChange} placeholder="First name" />
-                            <input type="submit" className="btn btn-success" value="Enroll"/>
-                            </form>
+                           
+                            <button type="button" id={course.id} className="btn btn-success" onClick={this.handleSubmit}>Enroll</button>
+                            
                         </div>
                     </div>
                 ))}

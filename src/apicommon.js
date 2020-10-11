@@ -1,8 +1,4 @@
-import axios from "axios";
 
-export default axios.create({
-  baseURL: "http://localhost:8000/api",
-  headers: {
-    "Content-type": "application/json"
-  }
-});
+const AXIOS_BASE_URL= "http://soma.local:84/api/"
+
+export default AXIOS_BASE_URL
