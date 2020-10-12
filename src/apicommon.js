@@ -1,4 +1,4 @@
 
-const AXIOS_BASE_URL= "http://soma.local:84/api/"
+const AXIOS_BASE_URL= "http://localhost:8000/api/"
 
 export default AXIOS_BASE_URL
