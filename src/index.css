@@ -417,6 +417,9 @@ body, html, .App, #root, .auth-wrapper {
         font-size: small;
       }
 
+      .content-wrapper{
+        background-color: white;
+      }
       .container-page{
           position: absolute;
           width: calc(100% - 200px);
