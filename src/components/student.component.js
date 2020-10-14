@@ -8,7 +8,8 @@ export default class Students extends Component{
     this.drawerState=this.drawerState.bind(this)
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
+    this.goToMenu=this.goToMenu.bind(this)
+    this.logout=this.logout.bind(this)
     
 
     this.state={
@@ -92,9 +93,38 @@ drawerState(e){
     
 }
 
+goToMenu(e){
+    
+    const link=e.target.id
+    console.log('link ',link)
+    this.props.history.push("/"+link)
+}
+
+logout(){
+    let config={
+        method: 'post',
+        url: API_URL+'logout',
+        headers:{
+            Authorization:"Bearer   "+localStorage.getItem('token')
+        }
+    }
+    axios(config)
+    .then(({data}) => {
+        localStorage.removeItem('token')
+        console.log(data.message)
+        this.props.history.push("/")
+    }).catch((err)=>{
+        console.log("error log out ",err.message)
+    })
+}
+
 getData(){
         
-    axios.post(API_URL+'user-data',{case:0})
+    axios.post(API_URL+'user-data',{case:0},{
+        headers:{
+            Authorization:"Bearer   "+localStorage.getItem('token')
+        }
+    })
     .then(({data}) => {
       let c = data.courses;
       this.setState({ course:c });
@@ -122,7 +152,7 @@ render(){
                             </div>
                             <span>My Profile</span>
                         </div>
-                        <div className="list-menu-item clickable">
+                        <div id="classroom" className="list-menu-item clickable" onClick={this.goToMenu}>
                             <div className="myMenu">
                                 <img src="/img/icons/person.svg" alt="menu icon" className="myIcon"/>
                             </div>
@@ -133,6 +163,12 @@ render(){
                                 <img src="/img/icons/person.svg" alt="menu icon" className="myIcon"/>
                             </div>
                             <span>My Tests</span>
+                        </div>
+                        <div className="list-menu-item clickable" onClick={this.logout}>
+                            <div className="myMenu">
+                                <img src="/img/icons/exit_app.svg" alt="menu icon" className="myIcon"/>
+                            </div>
+                            <span>Log out</span>
                         </div>
                     </div>
                 </div>
