@@ -21,7 +21,8 @@ body {
   background: #FFFFFF !important;
   min-height: 100vh;
   display: flex;
-  font-weight: 400;
+  font-size: 1.5em !important;
+  font-weight: 400 !important;
   font-family: 'Fira Sans', sans-serif;
 }
 
@@ -488,7 +489,15 @@ body, html, .App, #root, .auth-wrapper {
         cursor: pointer;
         padding: 10px;
       }
-
+      .course-body{
+        color: black;
+        
+        height:auto;
+        overflow: hidden;
+        margin-top:30%;
+        background-color:transparent;
+     
+      }
       .course-card:hover, .myMenu:hover{
         background-color: rgba(110, 107, 107, 0.4);
       }
@@ -513,5 +522,6 @@ body, html, .App, #root, .auth-wrapper {
         margin-top: -10px;
         background-color: #0091ea;
       }
+      
 
   
