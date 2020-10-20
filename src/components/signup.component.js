@@ -42,6 +42,14 @@ export default class SignUp extends Component {
     
     render() {
         return (
+            <div id="container" className="login-container">
+            <div className="vacenter" >
+            <p className="appName">SOMA APP</p><br/>
+            <p className="myAuth">Welcome to Adult Learning App</p>
+            <p className="myAuth">Register Now and start learning</p>
+            <hr style={{width:"150px"}}/><br/>
+
+            <div className="myContent">
             <form onSubmit ={this.handleSubmit}>
                  <div className="auth-wrapper">
         <div className="auth-inner">
@@ -74,6 +82,10 @@ export default class SignUp extends Component {
                 </div>
                 </div>
             </form>
+            </div>
+            </ div>
+            </div>
+            
         );
     }
 }
