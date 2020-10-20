@@ -19,6 +19,8 @@ export default class Classroom extends Component {
       lesson_title:''
     }
     this.currentLesson=0
+    this.currentLink=0
+    this.video_links=[]
   }
 
   componentDidMount(){
@@ -38,10 +40,27 @@ export default class Classroom extends Component {
   }
 
   getLesson(nb){
-    this.currentLesson+=nb
-    const link=this.state.lessons[this.currentLesson].video_link
+    this.currentLink+=nb
+    console.log("increment ",nb)
+    if(this.currentLink===this.video_links.length||this.currentLink<0){
+      console.log("check 0 ")
+      this.currentLesson+=nb
+      this.currentLink=0
+    }
+
+    if(this.currentLesson<this.state.lessons.length&&this.currentLink>=0){
+      console.log("check 1 ")
+    const vlink=this.state.lessons[this.currentLesson].video_link
+    if(typeof(vlink)==='string'&&vlink.length>1){
+      console.log("check 2 ")
+    this.video_links=vlink.split(',')
+    const link=this.video_links[this.currentLink]
     const title=this.state.lessons[this.currentLesson].name
     this.setState({video_link:link,lesson_title:title})
+    }else this.getLesson(nb)
+
+    }
+    console.log("video links ",this.currentLink,this.video_links[this.currentLink])
   }
 
 
