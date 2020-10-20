@@ -14,7 +14,6 @@ export default class Students extends Component{
     this.returnRowValue=this.returnRowValue.bind(this)
     this.manDialog=this.manDialog.bind(this)
     this.delEntry=this.delEntry.bind(this)
-   
 
     this.state={
         //data from api
@@ -75,11 +74,13 @@ export default class Students extends Component{
         showUpdate:false
         
     }
-
+    this.mediaLabel=''
     this.btnLabel='New Category';
     this.currentModel=0;
     this.cols=[];
     this.rows=[];
+    this.formAPI=''
+    this.messageDialog=''
 }
 
 componentDidMount(){
@@ -90,17 +91,18 @@ componentDidMount(){
           const user=JSON.parse(localStorage.getItem("user"))
           console.log("logged user ",user)
           this.setState({user:user})
+
           this.getData(true)
-          this.interval=setInterval(() => {
-              this.getData(false)
-          }, 4000);
+          /*setTimeout(() => {
+              this.getData(true)
+          }, 1000);*/
 
           }else this.props.history.push('/sign-in');
 
 }
 
 componentWillUnmount(){
-    clearInterval(this.interval)
+   // clearInterval(this.interval)
 }
 
 setFormValues(e){
@@ -127,13 +129,16 @@ setFormValues(e){
     e.preventDefault()
    /* if(this.state.form.media_type==='video') this.setState({form:{video_link:this.state.form.media}})
     else this.setState({form:{files:this.state.form.media}})*/
-    
     axios.post(API_URL+"man/"+this.state.formAPI, (this.state.form)).then(({data})=>{
 
     console.log("succes message:",data.message)
-
+    this.messageDialog=data.message
+    this.manDialog()
+    this.getData(false)
     }).catch(err=>{
       console.error("error from submit ",err);
+      this.messageDialog="An error occured"
+      this.manDialog()
     })
   }
   
@@ -175,8 +180,10 @@ drawerState(e){
 }
 
 switchModel(cases){
+    //let cases=e.target.case
     console.log("model cases ",cases)
     this.showBloc("manEntry",false)
+
     this.currentModel=cases
     let btnAdd=document.getElementById("btnAdd")
     if(btnAdd!==null)
@@ -185,14 +192,87 @@ switchModel(cases){
     switch (cases) {
         case 0:
             
-                this.rows=this.state.categories
-                this.cols=this.state.catCols
+                this.setState({
+                    rows:typeof(this.state.categories)!=='undefined'?this.state.categories:[],
+                    cols:this.state.catCols,
+                    btnLabel:'New Category',
+                    formAPI:'category'
+                })
+                /*this.cols=this.state.catCols
                 this.btnLabel='New Category'
-                this.currentModel=cases
+                this.formAPI='category'*/
             
             break;
+
+        case 1:
+            this.setState({
+                rows:typeof(this.state.langs)!=='undefined'?this.state.langs:[],
+                cols:this.state.langCols,
+                btnLabel:'New Language',
+                formAPI:'language'
+            })
+               /* this.rows=typeof(this.state.langs)!=='undefined'?this.state.langs:[]
+                this.cols=this.state.langCols
+                this.btnLabel='New Language'
+                this.formAPI='language'*/
+            break;
+
+        case 2:
+            this.setState({
+                rows:typeof(this.state.courses)!=='undefined'?this.state.courses:[],
+                cols:this.state.courseCols,
+                btnLabel:'New Course',
+                formAPI:'course'
+            })
+                /*this.rows=typeof(this.state.courses)!=='undefined'?this.state.courses:[]
+                this.cols=this.state.courseCols
+                this.btnLabel='New Course'
+                this.formAPI='course'*/
+            break;
+
+        case 3:
+            this.setState({
+                rows:typeof(this.state.lessons)!=='undefined'?this.state.lessons:[],
+                cols:this.state.lessCols,
+                btnLabel:'New Lesson',
+                formAPI:'lesson'
+            })
+            
+                /*this.rows=typeof(this.state.lessons)!=='undefined'?this.state.lessons:[]
+                this.cols=this.state.lessCols
+                this.btnLabel='New Lesson'
+                this.formAPI='lesson'*/
+            break;
+
+        case 4:
+            this.setState({
+                rows:typeof(this.state.users)!=='undefined'?this.state.users:[],
+                cols:this.state.userCols,
+            })
+                /*this.rows=typeof(this.state.users)!=='undefined'?this.state.users:[]
+                this.cols=this.state.userCols*/
+            
+            break;
+
     
         default:
+            //localStorage.removeItem('token')
+            let config={
+                method: 'post',
+                url: API_URL+'logout',
+                headers:{
+                    Accept:'application/json',
+                    Authorization:"Bearer   "+localStorage.getItem('token')
+                }
+            }
+            axios(config)
+            .then(({data}) => {
+                localStorage.removeItem('token')
+                console.log(data.message)
+                this.props.history.push("/")
+            }).catch((err)=>{
+                console.log("error log out ",err.message)
+            })
             break;
     }
    // console.log("rows",this.rows,"\ncols ",this.cols)
@@ -221,7 +301,7 @@ getSelectedRow(row){
 
 getData(def){
        
-    axios.get('http://soma.local:84/api/admin')
+    axios.get(API_URL+'admin')
     .then(({data}) => {
       
       this.setState({ 
@@ -232,9 +312,13 @@ getData(def){
           lessons:data.lessons
         });
 
-        def ? this.switchModel(0):this.switchModel(this.state.currentModel)
+        if(def) {
+            this.switchModel(0)
+            console.log("case 0 launched ")
+        }
+        else this.switchModel(this.currentModel)
 
-        console.log("admin data ",data)
+        console.log("def ",def)
       
     })
     .catch((error) => {
@@ -258,31 +342,44 @@ render(){
                             </div>
                             <span>My Profile</span>
                         </div>
-                        <div className="list-menu-item clickable" onClick={this.switchModel(0)}>
+                        <div className="list-menu-item clickable" onClick={()=>this.switchModel(0)}>
                             <div className="myMenu">
-                                <img src="/img/icons/person.svg" alt="menu icon" className="myIcon"/>
+                                <img src="/img/icons/category.svg" alt="menu icon" className="myIcon"/>
                             </div>
                             <span>Categories</span>
                         </div>
-                        <div className="list-menu-item clickable">
+                        <div className="list-menu-item clickable" onClick={()=>this.switchModel(1)}>
                             <div className="myMenu">
-                                <img src="/img/icons/person.svg" alt="menu icon" className="myIcon"/>
+                                <img src="/img/icons/lang.svg" alt="menu icon" className="myIcon"/>
                             </div>
                             <span>Languages</span>
                         </div>
-                        <div className="list-menu-item clickable">
+                        <div className="list-menu-item clickable" onClick={()=>this.switchModel(2)}>
                             <div className="myMenu">
-                                <img src="/img/icons/person.svg" alt="menu icon" className="myIcon"/>
+                                <img src="/img/icons/course.svg" alt="menu icon" className="myIcon"/>
                             </div>
                             <span>Courses</span>
                         </div>
-                        <div className="list-menu-item clickable">
+                        <div className="list-menu-item clickable" onClick={()=>this.switchModel(3)}>
                             <div className="myMenu">
-                                <img src="/img/icons/person.svg" alt="menu icon" className="myIcon"/>
+                                <img src="/img/icons/lesson.svg" alt="menu icon" className="myIcon"/>
                             </div>
                             <span>Lessons</span>
                         </div>
+                        <div className="list-menu-item clickable" onClick={()=>this.switchModel(4)}>
+                            <div className="myMenu">
+                                <img src="/img/icons/people.svg" alt="menu icon" className="myIcon"/>
+                            </div>
+                            <span>Registered Users</span>
+                        </div>
+                        <div className="list-menu-item clickable" onClick={()=>this.switchModel(5)}>
+                            <div className="myMenu">
+                                <img src="/img/icons/exit_app.svg" alt="menu icon" className="myIcon"/>
+                            </div>
+                            <span>Log out</span>
+                        </div>
                     </div>
+                    
                 </div>
                 <div id="container" className="container-page" style={{width: "calc(100% - 200px)",marginLeft:"200px"}}>
             <div className="myToolbar">
@@ -292,18 +389,18 @@ render(){
                 <h3>Administration Page</h3>
             </div>
             
-            <div className="content-wrapper" style={{backgroundColor:"white",marginTop:"65px"}}>
+            <div className="content-wrapper" style={{backgroundColor:"white",marginTop:"65px",marginLeft:"10px"}}>
             <div className="card-body table-responsive p-0">
         
-        <table className="table table-hover text-nowrap">
+        <table className="table table-hover text-nowrap" style={{border:"1px solid black"}}>
           <thead>
               <tr>
-                    <td style={{width:"70%"}}><input type="button" className="btn btn-primary float-left" value={this.btnLabel} onClick={this.showForm}/></td>
+                    <td style={{width:"70%"}}><input id="btnAdd" type="button" className="btn btn-primary float-left" value={this.state.btnLabel} onClick={this.showForm} style={{display:"block"}}/></td>
                     <td style={{width:"50%"}}><input type="text" name="table_search" className="form-control float-right" placeholder="Search" style={{width:"60%"}}/></td>
               </tr>
               <tr></tr>
             <tr>
-              {this.cols.map(col=>(
+              {this.state.cols.map(col=>(
               <th key={col.id}>{col.label}</th>
               ))}
             </tr>
@@ -318,9 +415,15 @@ render(){
                   }
                   </td>
               ))}
+         {/* <td>{row.name}</td>
+            <tr key={row.id}>
+              {this.state.cols.map(col=>(
+              <td key={col.id}>{row[col.field]}</td>
+              ))}
           <td>{row.name}</td>
+
           <td>{row.code}</td>
-          <td>{row.created_at}</td>
+          <td>{row.created_at}</td>*/}
           </tr>
           ))}
         
@@ -333,16 +436,16 @@ render(){
       </div>
      </div>
     
-          <div id="fillForm" className="fill-parent" style={ {display:"none"} }>
+          <div id="fillForm_0" className="fill-parent" style={ {display:"none"} }>
           <div className="fill-form">
            <button type="button" onClick={this.showForm} className="close">&times;</button>
             <h3>Category Management</h3>
             <form className="entry-form" onSubmit={this.onSubmit}>
-            <label htmlFor="name">Name:</label><input id="name" name="name" value={this.state.form.name}  onChange={this.setFormValues} type="text"/><br/>
-            <label htmlFor="code">Code:</label><input id="code" name="code" type="text" value={this.state.form.code} onChange={this.setFormValues}/><br/>
+            <label htmlFor="name">Name:</label><input id="name" name="name" className="form-control" value={this.state.form.name}  onChange={this.setFormValues} type="text" required/><br/>
+            <label htmlFor="code">Code:</label><input id="code" name="code" className="form-control" type="text" value={this.state.form.code} onChange={this.setFormValues} required/><br/>
             <div className="actions">
-            <input type="reset" className="btn btn-danger" value="Reset" />
-            <input type="submit" className="btn btn-success" value="Submit"/>
+            <button type="reset" className="btn btn-danger">Reset</button>
+            <button type="submit" className="btn btn-success">Submit</button>
             </div>
             </form>
           </div>
@@ -433,7 +536,6 @@ render(){
                 </div><span>Information</span>
             <p>{this.messageDialog}</p><br/>
             <button type="submit" className="btn btn-success" onClick={this.manDialog}>Ok</button>
-          </div>
           </div>
           </div>
           </div>

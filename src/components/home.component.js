@@ -24,7 +24,7 @@ export default class Home extends Component {
       else this.props.history.push('/student');
       }else{
         console.log("no logged user ");
-        this.props.history.push('/sign-in');
+        this.props.history.push('/about');
 
           }
         

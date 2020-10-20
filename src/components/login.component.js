@@ -45,6 +45,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
+import API_URL from "../apicommon";
 export default class Login extends Component {
     constructor(props) {
         super(props)
@@ -85,20 +86,20 @@ export default class Login extends Component {
           //console.log("state",this.state);
           const data= this.state;
           
-      axios.post('http://soma.local:84/api/login', data)
+      axios.post(API_URL+'login', data)
       .then(res => {
-        localStorage.setItem('token', res.data.success.token);
+        localStorage.setItem('token', res.data.access_token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
         if(res.data.user.role_id===1)
              this.props.history.push('/adminPage')
         else this.props.history.push('/student')
         
       }).catch((err)=>{
-        console.log("logging eeror ",err);
+        console.log("logging error type ",err.message);
           let bl=document.getElementById("error")
-          let msg=err.includes("401")?"Login/Password invalid":"Network Error. Check your network and retry."
-          bl.innerHTML=msg
-          bl.style.display="block"
+          let msg=err.message.includes("401")?"Login/Password invalid":"Network Error. Check your network and retry."
+          bl.innerHTML="<p>"+msg+"</p>"
+          //bl.style.display="block"
       })
 
 
@@ -114,7 +115,7 @@ export default class Login extends Component {
         else return <Redirect to='/student'/>;
         }*/
         return (
-            <div id="container" className="login-conatiner">
+            <div id="container" className="login-container">
             <div className="vacenter" >
             <p className="appName">SOMA APP</p><br/>
             <p className="myAuth">Authentification Page</p>
@@ -134,8 +135,8 @@ export default class Login extends Component {
 					</p>
                     <a style={{color:"white",textAlign:"center",fontSize:"medium",marginLeft:"30%"}} href="/sign-up">Create your account</a>
                     </form>
-                    <div id="error" className="tips_wrap" style={{display:"none"}}>
-                      
+                    <div id="error" className="tips_wrap" style={{display:"block"}}>
+                       
                     </div>
                 </div><br/>
             </div>

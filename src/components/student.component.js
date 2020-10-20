@@ -1,22 +1,81 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import API_URL from "../apicommon";
 
 export default class Students extends Component{
     constructor(props){
     super(props);
     this.drawerState=this.drawerState.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.goToMenu=this.goToMenu.bind(this)
+    this.logout=this.logout.bind(this)
     
+
     this.state={
+        
         course:[],
         lesson:[],
         drawer:false,
         contWidth:'',
-        mLeft:''
+        mLeft:'',
+        user:{},
+
     }
 }
 
+handleChange =(e) =>{
+    //const name= e.target.name;
+    
+
+    
+}
+
+handleSubmit=(e)=>{
+    //e.preventDefault();
+    let val =e.target.id;
+    val=parseInt(val)
+    let course=this.state.course
+    
+    let enroledCourse=course.filter(c=>(c.id===val))[0]
+    
+    let firstLess=enroledCourse.lessons[0]
+    
+    console.log('enroled course ',enroledCourse,'\n enroled first less ',firstLess)
+    
+    
+    
+    if(typeof(firstLess)!=='undefined'){
+        const data= firstLess.id;
+    axios
+    .post(API_URL+'students', {lesson:data},{
+        headers:{
+            Authorization:"Bearer   "+localStorage.getItem('token')
+        }
+    })
+    .then(res => {
+      
+       console.log("succes message:",data.message)
+       this.props.history.push('/classroom');
+     })
+    .catch((err)=>{
+      console.log("Enrollement error ",err)
+    })
+
+    }else console.log("Sorry No Lessons for this course choose another one. ")
+
+
+}
+
 componentDidMount(){
-    this.getData()
+    const token=localStorage.getItem("token");
+        
+        if (token){
+          const user=JSON.parse(localStorage.getItem("user"))
+          console.log("logged user ",user)
+          this.setState({user:user})
+          this.getData()
+          }else this.props.history.push('/sign-in');
 }
 
 drawerState(e){
@@ -34,21 +93,42 @@ drawerState(e){
     
 }
 
-getData(){
+goToMenu(e){
     
-   //for(let i=0;i<localStorage.length;i++)
-        //let userData=localStorage.getItem("user")
-        /*for (let ind = 0; ind < Object.length(userData); ind++) {
-            console.log("value ",userData.ind)
-        }*/
-       // localStorage.clear()
-       
-    axios.post('http://soma.local:84/api/user-data',{case:0})
+    const link=e.target.id
+    console.log('link ',link)
+    this.props.history.push("/"+link)
+}
+
+logout(){
+    let config={
+        method: 'post',
+        url: API_URL+'logout',
+        headers:{
+            Authorization:"Bearer   "+localStorage.getItem('token')
+        }
+    }
+    axios(config)
+    .then(({data}) => {
+        localStorage.removeItem('token')
+        console.log(data.message)
+        this.props.history.push("/")
+    }).catch((err)=>{
+        console.log("error log out ",err.message)
+    })
+}
+
+getData(){
+        
+    axios.post(API_URL+'user-data',{case:0},{
+        headers:{
+            Authorization:"Bearer   "+localStorage.getItem('token')
+        }
+    })
     .then(({data}) => {
       let c = data.courses;
       this.setState({ course:c });
         console.log("course ",this.state.course)
-      
     })
     .catch((error) => {
       console.warn(error);
@@ -62,8 +142,8 @@ render(){
                 <div id="drawer" className="myDrawer" style={{display:"block"}}>
                     <div className="user-profile" style={{backgroundImage:"url('/img/wall.jpg')",backgroundSize:"cover"}}>
                         <img src="/img/me.jpg" width="80" height="80" alt="profile" style={{borderRadius:"80%"}}/><br/>
-                        <span style={{color:"white",fontSize:"medium",fontWeight:"bold",float:"left"}}>Mamadou Hady Diallo</span>
-                        <span style={{color:"white",fontSize:"small",fontWeight:"italic",float:"left",marginTop:"2px"}}>mhadysydney@gmail.com<br/>664-504-690</span>
+                        <span style={{color:"white",fontSize:"medium",fontWeight:"bold",float:"left"}}>{this.state.user.name}</span>
+                        <span style={{color:"white",fontSize:"small",fontWeight:"italic",float:"left",marginTop:"2px"}}>{this.state.user.email}</span>
                     </div>
                     <div className="menu-list">
                         <div className="list-menu-item clickable">
@@ -72,7 +152,7 @@ render(){
                             </div>
                             <span>My Profile</span>
                         </div>
-                        <div className="list-menu-item clickable">
+                        <div id="classroom" className="list-menu-item clickable" onClick={this.goToMenu}>
                             <div className="myMenu">
                                 <img src="/img/icons/person.svg" alt="menu icon" className="myIcon"/>
                             </div>
@@ -83,6 +163,12 @@ render(){
                                 <img src="/img/icons/person.svg" alt="menu icon" className="myIcon"/>
                             </div>
                             <span>My Tests</span>
+                        </div>
+                        <div className="list-menu-item clickable" onClick={this.logout}>
+                            <div className="myMenu">
+                                <img src="/img/icons/exit_app.svg" alt="menu icon" className="myIcon"/>
+                            </div>
+                            <span>Log out</span>
                         </div>
                     </div>
                 </div>
@@ -105,12 +191,15 @@ render(){
                             </div>
                             <h6 style={{color:"white",textAlign:"center"}}>{course.name}</h6>
                             <p style={{color:"#1d1d1d",textAlign:"justify",backgroundColor:"#e0f7fa",padding:"5px"}}>{course.description}</p>
-                            <input type="button" className="btn btn-success" value="Enroll"/>
+                           
+                            <button type="button" id={course.id} className="btn btn-success" onClick={this.handleSubmit}>Enroll</button>
+                            
                         </div>
                     </div>
                 ))}
             </div>
             </div>
+            
         </section> 
         </div>
 

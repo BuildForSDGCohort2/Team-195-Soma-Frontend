@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component } from "react";
+import API_URL from "../apicommon";
 
 export default class SignUp extends Component {
 
@@ -10,8 +11,7 @@ export default class SignUp extends Component {
           email: null,
           password: null,
           password_confirmation: null,
-          role_id:'1',
-
+          role_id:2,
         }
       }
       handleChange =(e) =>{
@@ -28,7 +28,7 @@ export default class SignUp extends Component {
           const data= this.state;
           
           axios
-          .post('https://team-195-soma-backend.herokuapp.com/api/register', data)
+          .post(API_URL+'register', data)
           .then(res => {
              console.log(res);
              console.log(res.data);
@@ -42,6 +42,14 @@ export default class SignUp extends Component {
     
     render() {
         return (
+            <div id="container" className="login-container">
+            <div className="vacenter" >
+            <p className="appName">SOMA APP</p><br/>
+            <p className="myAuth">Welcome to Adult Learning App</p>
+            <p className="myAuth">Register Now and start learning</p>
+            <hr style={{width:"150px"}}/><br/>
+
+            <div className="myContent">
             <form onSubmit ={this.handleSubmit}>
                  <div className="auth-wrapper">
         <div className="auth-inner">
@@ -74,6 +82,10 @@ export default class SignUp extends Component {
                 </div>
                 </div>
             </form>
+            </div>
+            </ div>
+            </div>
+            
         );
     }
 }

@@ -23,3 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 package-lock.json
 .gitignore
+src/apicommon.js
+package-lock.json
