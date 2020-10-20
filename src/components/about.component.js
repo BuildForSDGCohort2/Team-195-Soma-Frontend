@@ -20,10 +20,11 @@ export default class About extends Component {
 !</p>
                     </div>
                 </div>
+        
                 </div>
-            </div>
-            </div>
-        </div>
+                </div>
+                </div>
+                </div>
         </section>
         <section className="colorlib-about">
         <div className="colorlib-narrow-content">
@@ -55,6 +56,81 @@ export default class About extends Component {
                     <p>is simply dummy text of the printing and typesetting industry</p>
                 </div>
                 </div>
+      </div>
+      <div className="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+        <div className="text-icon-box relative mb20 xs-mb0 wow fadeInUp padding30" data-wow-delay="0.3s">
+          <div className="box-icon features-box-icon">
+            <i className="fa fa-rocket" />
+          </div>
+          <h3 className="box-title">Learn from anywhere</h3>
+          <p>A Google Docs scam that appears to be widespread began landing in Wednesday in what seemed to be a phishing attack.</p>
+        </div>
+      </div>
+      <div className="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+        <div className="text-icon-box relative mb20 xs-mb0 wow fadeInUp padding30 visible-sm" data-wow-delay="0.4s">
+          <div className="box-icon features-box-icon">
+            <i className="fa fa-cog" />
+          </div>
+          <h3 className="box-title">Quality Service</h3>
+          <p>A Google Docs scam that appears to be widespread began landing in Wednesday in what seemed to be a phishing attack.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  
+  {/*ABOUT TOP CONTENT AREA END*/}
+ 
+  {/*COURSE AREA*/}
+  <section className="course-area padding-top" id="courses">
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 col-sm-12 col-xs-12">
+          <div className="area-title text-center wow fadeIn">
+            <h2 className="xs-font26">Our Trending Courses</h2>
+          </div>
+        </div>
+      </div>
+      <div className="row course-list">
+        <div className="col-md-3 col-lg-3 col-sm-6 col-xs-12">
+          <div className="single-course mb20">
+            <img src="assest/img/course/blog-1.jpg" alt=""/>
+            <div className="course-details padding30">
+              <h3 className="font18">How to Write a Powerful Speech</h3>
+              <p>MPs who are leaving the protection of for the campaign trail will render...</p>
+              <p className="mt30"><a href="#" className="enroll-button">Enroll the Courses</a> </p>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-3 col-lg-3 col-sm-6 col-xs-12">
+          <div className="single-course mb20">
+            <img src="assest/img/course/blog-2.jpg" alt="" />
+            <div className="course-details padding30">
+              <h3 className="font18">The Art and Practice of Leadership</h3>
+              <p>MPs who are leaving the protection of for the campaign trail will render...</p>
+              <p className="mt30"><a href="#" className="enroll-button">Enroll the Courses</a> </p>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-3 col-lg-3 col-sm-6 col-xs-12">
+          <div className="single-course mb20">
+            <img src="assest/img/course/blog-3.jpg" alt="" />
+            <div className="course-details padding30">
+              <h3 className="font18">Introduction to Resume Writing</h3>
+              <p>MPs who are leaving the protection of for the campaign trail will render...</p>
+              <p className="mt30"><a href="#" className="enroll-button">Enroll the Courses</a> </p>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-3 col-lg-3 col-sm-6 col-xs-12">
+          <div className="single-course mb20">
+            <img src="assest/img/course/blog-4.jpg" alt="" />
+            <div className="course-details padding30">
+              <h3 className="font18">The Art and Practice of Leadership</h3>
+              <p>MPs who are leaving the protection of for the campaign trail will render...</p>
+              <p className="mt30"><a href="#" className="enroll-button">Enroll the Courses</a> </p>
             </div>
             <div className="col-md-4 text-center animate-box">
                 <div className="services color-5">
@@ -104,6 +180,8 @@ export default class About extends Component {
             */}
             </div>
         </div>
+        </div>
+                </div>
         </section>
       </div>
             
