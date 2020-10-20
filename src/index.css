@@ -26,6 +26,14 @@ body {
   font-family: 'Fira Sans', sans-serif;
   overflow-x: hidden;
 }
+navbar-expand .navbar-nav .nav-link {
+  padding-right: .5rem;
+  padding-left: .5rem;
+  color: #ffffff !important;
+}
+.nav-link{
+  color: #ffffff !important;
+}
 
 h1,h2,h3,h4,h5,h6,label,span {
   font-weight: 500;
